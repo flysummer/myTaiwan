@@ -1,0 +1,75 @@
+﻿@model IEnumerable<myTaiwanTest.Models.Text>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.txtID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.userID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.txtTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.txtCreateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.txtUpdateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.locationDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sign.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.County.countryName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.txtID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.userID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.txtTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.txtCreateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.txtUpdateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.locationDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sign.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.County.countryName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

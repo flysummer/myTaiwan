@@ -1,0 +1,51 @@
+﻿@model IEnumerable<myTaiwanTest.Models.Image>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.imageID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.imgUrl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.imgDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Text.txtTitle)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.imageID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.imgUrl)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.imgDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Text.txtTitle)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.imageID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.imageID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.imageID })
+        </td>
+    </tr>
+}
+
+</table>
