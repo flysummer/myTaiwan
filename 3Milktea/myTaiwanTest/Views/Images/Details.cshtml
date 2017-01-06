@@ -1,0 +1,42 @@
+﻿@model myTaiwanTest.Models.Image
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Image</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.imgUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.imgUrl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.imgDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.imgDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Text.txtTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Text.txtTitle)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.imageID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
