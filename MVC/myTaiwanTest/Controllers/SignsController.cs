@@ -76,7 +76,7 @@ namespace myTaiwanTest.Controllers
                 {
                     throw;
                 }
-                return RedirectToAction("ArctileIndex");
+                return RedirectToAction("DynamicIndex");
             }
             return View(sign);
         }
@@ -84,7 +84,7 @@ namespace myTaiwanTest.Controllers
 
         public ActionResult LogIn()
         {
-            return View("ArctileIndex");
+            return View("DynamicIndex");
         }
         //登入
         [HttpPost]
@@ -102,7 +102,7 @@ namespace myTaiwanTest.Controllers
                 {
                     if (query.Count() == 1)
                     {
-                        return View("userIndex");
+                        return View("DynamicIndex");
                     }
                         
                 }
@@ -120,7 +120,7 @@ namespace myTaiwanTest.Controllers
             return View();
         }
 
-        public ActionResult DynamicIndex()
+        public ActionResult ArctileIndex()
         {
             return View();
         }

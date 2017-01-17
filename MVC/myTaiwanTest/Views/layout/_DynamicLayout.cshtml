@@ -44,7 +44,11 @@ Released   : 20130902
 
     <link href="/assets-YiChun/css/style_lee.css" rel="stylesheet" />
     <link href="/assets-YiChun/css/style-responsive.css" rel="stylesheet" />
-
+    <style>
+        #header_face {
+            cursor:pointer;
+        }
+    </style>
 
     <!--[if IE 6]><link href="/assets-YiChun\css\default.css_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
 
@@ -78,12 +82,12 @@ Released   : 20130902
             <ul class="left">
                 <li id="header_face">
                     <!-- 大頭貼縮圖 -->
-                    <img src="/assets-YiChun/img/YC.jpg" class="logoface" />
+                    <img src="/assets-YiChun/img/YC.jpg" class="logoface"/  onclick="toArctileIndex()" >
                 </li>
             </ul>
             <ul>
                 <li>
-                    <label>userID</label>
+                    <label onclick="toArctileIndex()">userID</label>
                 </li>
 
             </ul>
@@ -101,7 +105,7 @@ Released   : 20130902
             <!-- Right Nav Section -->
             <ul class="right">
                 <li class="active"><a href="index.html"><img src="/images/add-point.png" class="image-icon" /></a></li>
-                <li class="active"><a href="index.html"><img src="/images/logout.png" class="image-icon" /></a></li>
+                <li class="active"><a href="/signs/signin"><img src="/images/logout.png" class="image-icon" /></a></li>
                 <li><a href="about-template.html"></a></li>
 
 
@@ -120,5 +124,11 @@ Released   : 20130902
     <div id="copyright" class="container">
         <p>&copy; Untitled. All rights reserved. | Photos by <a href="http://fotogrph.com/">Fotogrph</a> | Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.</p>
     </div>
+
+    <script>
+        function toArctileIndex() {
+            document.location.href = "/signs/ArctileIndex"
+        }
+    </script>
 </body>
 </html>
