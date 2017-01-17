@@ -10,11 +10,11 @@
 <div class="container">
     <div class="row">
         <div class="col-md-1"></div>
-        <div class="col-md-7" id="pic1">
-            <img src="image/女3.png">
+        <div class="col-md-6 col-sm-6 col-xs-6" id="pic1">
+            <img src="~/image/女3.png" style="width:60%">
         </div>
 
-        <div class="firstPageForm col-md-4">
+        <div class="firstPageForm col-md-4 col-sm-4 col-xs-4">
             @using (Html.BeginForm("LogIn","Signs"))
             {
                 @Html.AntiForgeryToken()
@@ -42,24 +42,24 @@
             {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
-                <form method="post" action="~/Signs/SignIn" name="sign" onsubmit="return check()">
+                <form method="post" action="" name="sign" id="signUp">
                     <div class="name1">
                         <p>New Friend?</p>
                     </div>
                     <div>
-                        <input type="text" placeholder="name" name="name" class="aput" />
-                        <img src="image/notwrite.png" class="nowrite" id="nw1" style="display:none" />
+                        <input type="text" placeholder="name" name="name" id="SignInName" class="aput" />
+                        <img src="~/image/notwrite.png" class="nowrite" id="nw1" style="display:none" />
                     </div>
                     <div>
-                        <input type="email" placeholder="email" name="email" class="aput" />
-                        <img src="image/notwrite.png" class="nowrite" id="nw2" style="display:none" />
+                        <input type="email" placeholder="email" name="email" id="email" class="aput" />
+                        <img src="~/image/notwrite.png" class="nowrite" id="nw2" style="display:none" />
                     </div>
                     <div>
-                        <input type="password" name="passwords" placeholder="passwords" class="aput" />
-                        <img src="image/notwrite.png" class="nowrite" id="nw3" style="display:none" />
+                        <input type="password" name="passwords" placeholder="passwords" id="SignInPass" class="aput" />
+                        <img src="~/image/notwrite.png" class="nowrite" id="nw3" style="display:none" />
                     </div>
                     <div>
-                        <a href=""> <input type="submit" name="submit" value="Sign Up" id="register" class="btn" onclick="check()" /></a>
+                        <a href=""> <input type="submit" name="submit" value="Sign Up" id="register" class="btn" onclick="JavaScript: return summitAction();" /></a>
                     </div>
                     <div>
                         <a href="private.html"><h6>註冊，即表示你同意我們的使用條款與隱私政策 。</h6></a>
@@ -82,39 +82,53 @@
 </div>
 <script>
     function check() {
-        var x = document.forms["sign"]["userName"].value;
-        if (x === "") {
-            document.getElementById("nw1").style.display = "inline";
+        var k =0;
 
-
+        var x = document.getElementById("SignInName").value;
+        if (x == "") {
+            document.getElementById("nw1").style.display = "inline"
+            k++;
         } else {
-            document.getElementById("nw1").style.display = "none";
+            document.getElementById("nw1").style.display = "none"
         }
-
-        var y = document.forms["sign"]["eMail"].value;
-        if (y === "") {
-            document.getElementById("nw2").style.display = "inline";
+        
+        var y = document.getElementById("email").value;
+        if (y == "") {
+            document.getElementById("nw2").style.display = "inline"
+            k++;
         }
         else {
             document.getElementById("nw2").style.display = "none";
         }
-        var z = document.forms["sign"]["password"].value;
-        if (z === "") {
-            document.getElementById("nw3").style.display = "inline";
+
+        var z = document.getElementById("SignInPass").value;
+        if (z == "") {
+            document.getElementById("nw3").style.display = "inline"
+            k++;
         }
         else {
             document.getElementById("nw3").style.display = "none";
         }
 
-        return false;
+        if (k == 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+        
+  
     }
-
-
+    function summitAction() {
+        if (check()) {
+            alert("都對");
+            //document.getElementById("signUp").submit();
+            return true;
+        }else{
+            alert("有錯");
+            return false;
+        }
+    }
 </script>
-
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 

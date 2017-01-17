@@ -59,7 +59,7 @@ namespace myTaiwanTest.Controllers
         }
         //註冊
         public ActionResult SignIn() {
-            return View();
+            return View("Login");
         }
 
         [HttpPost]
@@ -76,11 +76,16 @@ namespace myTaiwanTest.Controllers
                 {
                     throw;
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("ArctileIndex");
             }
             return View(sign);
         }
 
+
+        public ActionResult LogIn()
+        {
+            return View("ArctileIndex");
+        }
         //登入
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -96,7 +101,10 @@ namespace myTaiwanTest.Controllers
                 try
                 {
                     if (query.Count() == 1)
-                    return Content("登入成功");
+                    {
+                        return View("userIndex");
+                    }
+                        
                 }
                 catch(Exception ex)
                 {
@@ -104,7 +112,17 @@ namespace myTaiwanTest.Controllers
                 }
                 
             }
-            return Content("登入失敗");
+            return View("SignIn");
+        }
+
+        public ActionResult myFriend()
+        {
+            return View();
+        }
+
+        public ActionResult DynamicIndex()
+        {
+            return View();
         }
 
         // GET: Signs/Edit/5
