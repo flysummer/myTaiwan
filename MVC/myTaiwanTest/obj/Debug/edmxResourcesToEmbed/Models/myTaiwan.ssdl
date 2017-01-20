@@ -11,7 +11,7 @@
     <Key>
       <PropertyRef Name="FID" />
     </Key>
-    <Property Name="FID" Type="int" Nullable="false" />
+    <Property Name="FID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="userID" Type="int" Nullable="false" />
     <Property Name="friendID" Type="int" Nullable="false" />
   </EntityType>
@@ -43,7 +43,7 @@
     <Property Name="name" Type="varchar" MaxLength="30" Nullable="false" />
     <Property Name="passwords" Type="varchar" MaxLength="64" Nullable="false" />
     <Property Name="email" Type="varchar" MaxLength="64" Nullable="false" />
-    <Property Name="faceUrl" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="faceUrl" Type="varchar" MaxLength="64" />
     <Property Name="coverUrl" Type="varchar" MaxLength="64" Nullable="false" />
   </EntityType>
   <EntityType Name="Texts">

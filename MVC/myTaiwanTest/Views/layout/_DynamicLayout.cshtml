@@ -1,134 +1,195 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<!--
-Design by TEMPLATED
-http://templated.co
-Released for free under the Creative Commons Attribution License
-
-Name       : TailPiece
-Description: A two-column, fixed-width design with dark color scheme.
-Version    : 1.0
-Released   : 20130902
-
--->
-<html xmlns="http://www.w3.org/1999/xhtml">
+﻿<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SocialMap</title>
-    <meta name="description" content="SailBoat, FREE Foundation 5 website template." />
-    <meta name="keywords" content="foundation 5 template, sailboat template, free template" />
-
-    <link href="/assets-YiChun/css/foundation.css" rel="stylesheet" />
-    <link href="/assets-YiChun/css/fonts.css" rel="stylesheet" />
-    <link href="/assets-YiChun/css/font-awesome.min.css" rel="stylesheet" />
-    <script src="/assets-YiChun/js/modernizr.js"></script>
-
-
-    <meta class="foundation-data-attribute-namespace" />
-    <meta class="foundation-mq-xxlarge" />
-    <meta class="foundation-mq-xlarge" />
-    <meta class="foundation-mq-large" />
-    <meta class="foundation-mq-medium" />
-    <meta class="foundation-mq-small" />
-    <meta class="foundation-mq-topbar" />
-
-
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
-    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
-
-    <link href="/assets-YiChun/css/default.css" rel="stylesheet" type="text/css" media="all" />
-    <link href="/assets-YiChun/css/fonts.css" rel="stylesheet" type="text/css" media="all" />
-
-    <link href="/assets-YiChun/css/style_lee.css" rel="stylesheet" />
-    <link href="/assets-YiChun/css/style-responsive.css" rel="stylesheet" />
-    <style>
-        #header_face {
-            cursor:pointer;
-        }
-    </style>
-
-    <!--[if IE 6]><link href="/assets-YiChun\css\default.css_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
-
+    <title>Social Map</title>
+    <meta charset="utf-8" />
+    <link href="/assets-YiChun/css/header.css" rel="stylesheet" />
+    <link href="/assets-YiChun/css/main.css" rel="stylesheet" />
+    <!-- d3 -->
+    <script src="/assets-YiChun/js/d3.min.js"></script>
+    <script src="/assets-YiChun/js/jquery-2.2.4.min.js"></script>
+    <script src="/assets-YiChun/js/topojson.v2.min.js"></script>
+    <!--  -->
 </head>
 <body>
-    <nav class="top-bar foundation-bar " data-topbar=data-topbar>
-        <ul class="title-area">
-            <li id="headerLogo"><img src="/assets-YiChun/img/SocialMapwhite.png" class="logo" /></li>
-            <!-- Logo縮圖  -->
-
-            <li class="name">
-                <span data-tooltip=data-tooltip class="has-tip" title="Free Foundation 5 website template"><h1><a href="#">SailBoat</a></h1></span>
-            </li>
-            <li class="toggle-topbar menu-icon"><a href="#"><span>menu</span></a></li>
-        </ul>
-
-        <!--<ul>
-            <li class="header_search_wrap">
-                <form action="" method="get">
-                    <input type="button" class="search_map" />
-                    <input type="text" class="search_text" placeholder="Search" />
-                    <input type="submit" value="" class="search_button" />
-                </form>
-            </li>
-        </ul>-->
-
-
-
-        <section class="top-bar-section">
-            <!-- Left Nav Section -->
-            <ul class="left">
-                <li id="header_face">
-                    <!-- 大頭貼縮圖 -->
-                    <img src="/assets-YiChun/img/YC.jpg" class="logoface"/  onclick="toArctileIndex()" >
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <label onclick="toArctileIndex()">userID</label>
-                </li>
-
-            </ul>
-            <ul class="middle">
-                <li>
-                    <form action="" method="get">
-                        <input type="button" class="search_map" />
-                        <input type="text" class="search_text" placeholder="Search" />
-                        <input type="button" class="search_button" />
-                    </form>
-                </li>
-            </ul>
-
-
-            <!-- Right Nav Section -->
-            <ul class="right">
-                <li class="active"><a href="index.html"><img src="/images/add-point.png" class="image-icon" /></a></li>
-                <li class="active"><a href="/signs/signin"><img src="/images/logout.png" class="image-icon" /></a></li>
-                <li><a href="about-template.html"></a></li>
-
-
-            </ul>
-        </section>
-    </nav>
-    <div id="page">
-        <div class="container">
-            <div class="title">
-                <h2>Nulla luctus eleifend purus</h2>
-                <p>This is <strong>TailPiece</strong>, a free, fully standards-compliant CSS template designed by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>. The photos in this template are from <a href="http://fotogrph.com/"> Fotogrph</a>. This free template is released under the <a href="http://templated.co/license">Creative Commons Attribution</a> license, so you're pretty much free to do whatever you want with it (even use it commercially) provided you give us credit for it. Have fun :) </p>
+    <div class="header">
+        <nav class="top-bar">
+            <div>
+                <ul class="title-area">
+                    <li><img src="/assets-YiChun/images/header.png" class="logo" onclick="toDynamic()"/></li>
+                    <li><img src="/assets-YiChun/images/YC.jpg" class="logoface" onclick="toArctile()"/></li>
+                    <li><label onclick="toArctile()">@Session["userName"]</label></li>
+                </ul>
             </div>
-            @RenderBody()
+
+            <section>
+                <ul>
+                    <li class="section-icon"><a><img src="/assets-YiChun/images/logout.png" class="top-icon" onclick="toLogout()"/></a></li>
+                    <li class="section-icon"><a><img src="/assets-YiChun/images/add.png" class="top-icon" onclick="toText()"/></a></li>
+                    <li class="section-search">
+                        <form action="/signs/searchUser" method="post">
+                            <input type="button" class="search_map" />
+                            <input type="text" name="name" class="search_text" placeholder="Search" />
+                            <input type="submit" value="" class="search_button" />
+                        </form>
+                    </li>
+                </ul>
+            </section>
+        </nav>
+    </div>
+
+    <div class="dynamicImageSpace">
+        <!--        <img src="/assets-YiChun/images/high-resolutionImage.jpg" class="largeImage"/>-->
+
+        <img src="/assets-YiChun/images/R0011094.jpg" class="largeImage" />
+    </div>
+    <div class="dynamicBodySpace">
+        <div class="taiwanBar">
+            <svg width="100%" height="575px"></svg>
+
+
         </div>
+        @RenderBody()
     </div>
-    <div id="copyright" class="container">
-        <p>&copy; Untitled. All rights reserved. | Photos by <a href="http://fotogrph.com/">Fotogrph</a> | Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.</p>
-    </div>
+    @* 畫台灣 *@
+    <script>
+        d3.json("/assets-YiChun/js/taiwanChi.json", function (geojson) {
+
+            var PopulationDensity = '{\
+                "台北市": 9917.98,\
+                "嘉義市": 4495.98,\
+                "新竹市": 4199,\
+                "基隆市": 2802.83,\
+                "新北市": 1938.65,\
+                "桃園市": 1759.09,\
+                "台中市": 1249.38,\
+                "彰化縣": 1198.02,\
+                "高雄市": 941.57,\
+                "金門縣": 890.92,\
+                "台南市": 860.55,\
+                "澎湖縣": 813.97,\
+                "雲林縣": 538.31,\
+                "連江縣": 437.33,\
+                "新竹縣": 383.51,\
+                "苗栗縣": 307.19,\
+                "屏東縣": 301.12,\
+                "嘉義縣": 270.7,\
+                "宜蘭縣": 213.44,\
+                "南投縣": 123.02,\
+                "花蓮縣": 71.49,\
+                "台東縣": 62.81\
+            }';
+            var x, y, s;
+
+            var zoom = d3.zoom()
+                .scaleExtent([1, 10])
+                .on("zoom", zoomed);
+
+            function zoomed() {
+                x = d3.event.translate;
+                //y = d3.event.translate;
+                s = d3.event.scale;
+                //svg.attr("transform", "translate(" + d3.event.translate + ") scale(" + d3.event.scale + ")");
+                svg.attr("transform", d3.event.transform);
+            }
+
+            var pd = JSON.parse(PopulationDensity)
+            //alert(pd["台北市"]);
+            var svg = d3.select("svg").append("g");
+
+
+            var features = topojson.feature(geojson, geojson.objects["Taiwan"]).features;
+
+            var path = d3.geoPath().projection( // 路徑產生器
+                d3.geoMercator().center([119.5825975, 26]).scale(5500).translate([60, 50]) // 座標變換函式
+
+            );
+            //color
+            var color = d3.scaleLinear().domain([50, 10000]).range(["#008000", "#000000"]);
+
+            var taiwan = svg.selectAll("path").data(features)
+              .enter().append("path").attr("d", path);
+
+            //繪製台灣地圖
+            taiwan.attr("class", "subunit-boundary").style("fill", function (d) {
+                return color(pd[d.properties["COUNTYNAME"]]);
+            });
+
+
+            //var zoom = d3.zoom()
+            //.scaleExtent([1, 10])
+            //.on("zoom", zoomed);
+
+            //function zoomed() {
+            //    taiwan.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")")
+            //}
+            //svg.call(zoom).append("g");
+            //台灣-滑鼠移入顯示縣市名稱
+            d3.select("svg").selectAll("path")
+            .on("mouseover", function () {
+                //d3.select(this).append("svg:title").text(function (d) {
+                //    return d.properties["COUNTYNAME"];
+                //});
+                if (d3.select(this).attr("class") == "subunit-boundary")
+                d3.select(this).transition().duration(10).attr("class", "subunit-boundary").style("fill", function (d) {
+                    return "#ff6600";
+                });
+
+            });
+            //台灣-點擊
+            d3.select("svg").selectAll("path")
+            .on("click", function (d) {
+                if (!d3.select(this).classed("taiwanClick")){
+                    d3.select(".taiwanClick").transition().duration(500)
+                        .attr("class", "subunit-boundary").style("fill", function (d) {
+                        return color(pd[d.properties["COUNTYNAME"]]);
+                        });
+                    d3.select(this).attr("class", "taiwanClick").style("fill","#FF0000");
+                }
+                else if (d3.select(this).classed("taiwanClick")) {
+                    d3.select(this).transition().duration(500)
+                        .attr("class", "subunit-boundary").style("fill", function (d) {
+                            return color(pd[d.properties["COUNTYNAME"]]);
+                        });
+                }
+                //d3.select("#circle").select("p").text("你現在位於" + d.properties["COUNTYNAME"] + "!")
+                alert(d.properties["COUNTYNAME"] + "!");
+
+                $("#li2").append();
+
+            })
+            .on("mouseout", function () {
+                //d3.select("#circle").select("p").text("隨便點個滑鼠左鍵");
+                if (d3.select(this).attr("class") == "subunit-boundary")
+                    d3.select(this).transition().duration(500).attr("class", "subunit-boundary").style("fill", function (d) {
+                        return color(pd[d.properties["COUNTYNAME"]]);
+                    });
+            });
+        });
+
+    </script>
 
     <script>
-        function toArctileIndex() {
-            document.location.href = "/signs/ArctileIndex"
+        function toArctile() {
+            window.location.href = "/signs/ArctileIndex"
         }
+
+        function toDynamic() {
+            window.location.href = "/signs/Login"
+        }
+
+        function toLogout() {
+            window.location.href = "/signs/SignIn"
+        }
+
+        function toText() {
+            window.location.href = "/signs/addText"
+        }
+
+        (function(){
+            //alert("Milktea");
+        })()
     </script>
 </body>
 </html>

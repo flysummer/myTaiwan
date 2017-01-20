@@ -72,13 +72,21 @@ namespace myTaiwanTest.Controllers
                 try
                 {
                     db.SaveChanges();
-                }catch(Exception ex)
+                    var query = db.Signs.FirstOrDefault(o => o.name == sign.name &&
+                                        o.passwords == sign.passwords);
+                    if (query != null) {
+                        Session["userName"] = query.name;
+                        Session["userID"] = query.ID;
+                        return View("DynamicIndex");
+                    }
+                    
+                }
+                catch(Exception ex)
                 {
                     throw;
                 }
-                return RedirectToAction("DynamicIndex");
             }
-            return View(sign);
+            return View("Login", sign);
         }
 
 
@@ -93,15 +101,18 @@ namespace myTaiwanTest.Controllers
         {
             if (ModelState.IsValid)
             {
-                var query = from o in db.Signs
-                            where o.name == sign.name &&
-                                  o.passwords == sign.passwords
-                            select o; 
-               
+                //var query = from o in db.Signs
+                //            where o.name == sign.name &&
+                //                  o.passwords == sign.passwords
+                //            select o;
+                var query = db.Signs.FirstOrDefault(o => o.name == sign.name && 
+                                        o.passwords == sign.passwords);
                 try
                 {
-                    if (query.Count() == 1)
+                    if (query != null)
                     {
+                        Session["userName"] = query.name;
+                        Session["userID"] = query.ID;
                         return View("DynamicIndex");
                     }
                         
@@ -112,19 +123,76 @@ namespace myTaiwanTest.Controllers
                 }
                 
             }
-            return View("SignIn");
+            return View("Login");
         }
-
+        //登出
+        public ActionResult LogOut()
+        {
+            //Session.Clear();
+            return View("Login");
+        }
+        //好友列表
         public ActionResult myFriend()
         {
             return View();
         }
+        //尋找好友(路人) //由searchtext取得資料
+        [HttpPost]
+        public ActionResult searchUser([Bind(Include = "name")] Sign sign)
+        {
+            //var query = from o in db.Signs
+            //            where o.name == sign.name
+            //            select new{
+            //                name = o.name
+            //            };
+            
+            var search = db.Signs.FirstOrDefault(o => o.name == sign.name);//好友(路人)資訊
+            if(db.Friends.Count(o => o.friendID == search.ID) == 1)//有一筆資料(是好友)
+                ViewData["isFriend"] = "true";
+            else
+                ViewData["isFriend"] = "false";//其他情況(非好友)
 
+            return View("FriendPage", search);
+        }
+        //文章列表
         public ActionResult ArctileIndex()
         {
             return View();
         }
+        //新增好友
+        public ActionResult addFriend(int id)
+        {
+            Friend list = new Friend()
+            {
+                userID = Convert.ToInt32(Session["userID"]),
+                friendID = id
+            };
+            db.Friends.Add(list);
+            db.SaveChanges();
+            ViewData["isFriend"] = "true";
+            var search = db.Signs.FirstOrDefault(o => o.ID == id);
+            return View("FriendPage", search);
+        }
+        //刪除好友
+        public ActionResult delFriend(int id)
+        {
+            Friend list = db.Friends.FirstOrDefault(o => o.friendID == id);
+            db.Friends.Remove(list);
+            db.SaveChanges();
+            ViewData["isFriend"] = "false";
+            var search = db.Signs.FirstOrDefault(o => o.ID == id);
+            return View("FriendPage", search);
+        }
 
+        public ActionResult addText()
+        {
+            return View();
+        }
+
+
+
+
+        //以下無用
         // GET: Signs/Edit/5
         public ActionResult Edit(int? id)
         {

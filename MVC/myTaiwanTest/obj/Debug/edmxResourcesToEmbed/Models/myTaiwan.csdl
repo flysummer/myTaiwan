@@ -47,7 +47,7 @@
     <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="passwords" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="email" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="faceUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="faceUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
     <Property Name="coverUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Friends" Relationship="Self.FK__Friends__userID__25869641" FromRole="Sign" ToRole="Friends" />
     <NavigationProperty Name="Texts" Relationship="Self.FK__Texts__userID__2B3F6F97" FromRole="Sign" ToRole="Texts" />

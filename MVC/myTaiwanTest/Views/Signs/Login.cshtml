@@ -81,7 +81,7 @@
                         </div>
                     </div>
                 }
-                @using (Html.BeginForm())
+                @using (Html.BeginForm("SignIn", "Signs"))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true)
