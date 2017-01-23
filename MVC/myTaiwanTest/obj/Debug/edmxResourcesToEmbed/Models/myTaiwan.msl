@@ -57,6 +57,7 @@
         <MappingFragment StoreEntitySet="Texts">
           <ScalarProperty Name="txtID" ColumnName="txtID" />
           <ScalarProperty Name="txtTitle" ColumnName="txtTitle" />
+          <ScalarProperty Name="txtText" ColumnName="txtText" />
           <ScalarProperty Name="txtCreateTime" ColumnName="txtCreateTime" />
           <ScalarProperty Name="txtUpdateTime" ColumnName="txtUpdateTime" />
           <ScalarProperty Name="userID" ColumnName="userID" />

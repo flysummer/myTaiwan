@@ -209,51 +209,142 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\addController.cs" />
     <Compile Include="Controllers\SignsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\County.cs">
-      <DependentUpon>myTaiwan.tt</DependentUpon>
+      <DependentUpon>MyTaiwan.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Friend.cs">
-      <DependentUpon>myTaiwan.tt</DependentUpon>
+      <DependentUpon>MyTaiwan.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Image.cs">
-      <DependentUpon>myTaiwan.tt</DependentUpon>
+      <DependentUpon>MyTaiwan.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\myTaiwan.Context.cs">
+    <Compile Include="Models\MyTaiwan.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>myTaiwan.Context.tt</DependentUpon>
+      <DependentUpon>MyTaiwan.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\myTaiwan.cs">
+    <Compile Include="Models\MyTaiwan.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>myTaiwan.tt</DependentUpon>
+      <DependentUpon>MyTaiwan.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\myTaiwan.Designer.cs">
+    <Compile Include="Models\MyTaiwan.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>myTaiwan.edmx</DependentUpon>
+      <DependentUpon>MyTaiwan.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Picture.cs">
-      <DependentUpon>myTaiwan.tt</DependentUpon>
+      <DependentUpon>MyTaiwan.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Sign.cs">
-      <DependentUpon>myTaiwan.tt</DependentUpon>
+      <DependentUpon>MyTaiwan.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SignModel.cs" />
     <Compile Include="Models\Text.cs">
-      <DependentUpon>myTaiwan.tt</DependentUpon>
+      <DependentUpon>MyTaiwan.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets-YiChun\ckeditor\adapters\jquery.js" />
+    <Content Include="assets-YiChun\ckeditor\build-config.js" />
+    <Content Include="assets-YiChun\ckeditor\ckeditor.js" />
+    <Content Include="assets-YiChun\ckeditor\config.js" />
+    <Content Include="assets-YiChun\ckeditor\contents.css" />
+    <Content Include="assets-YiChun\ckeditor\lang\en.js" />
+    <Content Include="assets-YiChun\ckeditor\lang\zh-cn.js" />
+    <Content Include="assets-YiChun\ckeditor\lang\zh.js" />
+    <Content Include="assets-YiChun\ckeditor\plugins\clipboard\dialogs\paste.js" />
+    <Content Include="assets-YiChun\ckeditor\plugins\dialog\dialogDefinition.js" />
+    <Content Include="assets-YiChun\ckeditor\plugins\icons.png" />
+    <Content Include="assets-YiChun\ckeditor\plugins\icons_hidpi.png" />
+    <Content Include="assets-YiChun\ckeditor\plugins\image\dialogs\image.js" />
+    <Content Include="assets-YiChun\ckeditor\plugins\image\images\noimage.png" />
+    <Content Include="assets-YiChun\ckeditor\samples\css\samples.css" />
+    <Content Include="assets-YiChun\ckeditor\samples\img\github-top.png" />
+    <Content Include="assets-YiChun\ckeditor\samples\img\header-bg.png" />
+    <Content Include="assets-YiChun\ckeditor\samples\img\header-separator.png" />
+    <Content Include="assets-YiChun\ckeditor\samples\img\logo.png" />
+    <Content Include="assets-YiChun\ckeditor\samples\img\navigation-tip.png" />
+    <Content Include="assets-YiChun\ckeditor\samples\index.html" />
+    <Content Include="assets-YiChun\ckeditor\samples\js\sample.js" />
+    <Content Include="assets-YiChun\ckeditor\samples\js\sf.js" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\ajax.html" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\api.html" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\appendto.html" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\assets\inlineall\logo.png" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\assets\outputxhtml\outputxhtml.css" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\assets\posteddata.php" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\assets\sample.jpg" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\assets\uilanguages\languages.js" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\datafiltering.html" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\dialog\assets\my_dialog.js" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\dialog\dialog.html" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\divreplace.html" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\enterkey\enterkey.html" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\index.html" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\inlineall.html" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\inlinebycode.html" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\inlinetextarea.html" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\jquery.html" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\readonly.html" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\replacebyclass.html" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\replacebycode.html" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\sample.css" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\sample.js" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\sample_posteddata.php" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\tabindex.html" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\toolbar\toolbar.html" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\uicolor.html" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\uilanguages.html" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\wysiwygarea\fullpage.html" />
+    <Content Include="assets-YiChun\ckeditor\samples\old\xhtmlstyle.html" />
+    <Content Include="assets-YiChun\ckeditor\samples\toolbarconfigurator\css\fontello.css" />
+    <Content Include="assets-YiChun\ckeditor\samples\toolbarconfigurator\font\fontello.svg" />
+    <Content Include="assets-YiChun\ckeditor\samples\toolbarconfigurator\font\LICENSE.txt" />
+    <Content Include="assets-YiChun\ckeditor\samples\toolbarconfigurator\index.html" />
+    <Content Include="assets-YiChun\ckeditor\samples\toolbarconfigurator\js\abstracttoolbarmodifier.js" />
+    <Content Include="assets-YiChun\ckeditor\samples\toolbarconfigurator\js\fulltoolbareditor.js" />
+    <Content Include="assets-YiChun\ckeditor\samples\toolbarconfigurator\js\toolbarmodifier.js" />
+    <Content Include="assets-YiChun\ckeditor\samples\toolbarconfigurator\js\toolbartextmodifier.js" />
+    <Content Include="assets-YiChun\ckeditor\samples\toolbarconfigurator\lib\codemirror\codemirror.css" />
+    <Content Include="assets-YiChun\ckeditor\samples\toolbarconfigurator\lib\codemirror\codemirror.js" />
+    <Content Include="assets-YiChun\ckeditor\samples\toolbarconfigurator\lib\codemirror\javascript.js" />
+    <Content Include="assets-YiChun\ckeditor\samples\toolbarconfigurator\lib\codemirror\neo.css" />
+    <Content Include="assets-YiChun\ckeditor\samples\toolbarconfigurator\lib\codemirror\show-hint.css" />
+    <Content Include="assets-YiChun\ckeditor\samples\toolbarconfigurator\lib\codemirror\show-hint.js" />
+    <Content Include="assets-YiChun\ckeditor\skins\flat\dialog.css" />
+    <Content Include="assets-YiChun\ckeditor\skins\flat\dialog_ie.css" />
+    <Content Include="assets-YiChun\ckeditor\skins\flat\dialog_ie7.css" />
+    <Content Include="assets-YiChun\ckeditor\skins\flat\dialog_ie8.css" />
+    <Content Include="assets-YiChun\ckeditor\skins\flat\dialog_iequirks.css" />
+    <Content Include="assets-YiChun\ckeditor\skins\flat\editor.css" />
+    <Content Include="assets-YiChun\ckeditor\skins\flat\editor_gecko.css" />
+    <Content Include="assets-YiChun\ckeditor\skins\flat\editor_ie.css" />
+    <Content Include="assets-YiChun\ckeditor\skins\flat\editor_ie7.css" />
+    <Content Include="assets-YiChun\ckeditor\skins\flat\editor_ie8.css" />
+    <Content Include="assets-YiChun\ckeditor\skins\flat\editor_iequirks.css" />
+    <Content Include="assets-YiChun\ckeditor\skins\flat\icons.png" />
+    <Content Include="assets-YiChun\ckeditor\skins\flat\icons_hidpi.png" />
+    <Content Include="assets-YiChun\ckeditor\skins\flat\images\arrow.png" />
+    <Content Include="assets-YiChun\ckeditor\skins\flat\images\close.png" />
+    <Content Include="assets-YiChun\ckeditor\skins\flat\images\hidpi\close.png" />
+    <Content Include="assets-YiChun\ckeditor\skins\flat\images\hidpi\lock-open.png" />
+    <Content Include="assets-YiChun\ckeditor\skins\flat\images\hidpi\lock.png" />
+    <Content Include="assets-YiChun\ckeditor\skins\flat\images\hidpi\refresh.png" />
+    <Content Include="assets-YiChun\ckeditor\skins\flat\images\lock-open.png" />
+    <Content Include="assets-YiChun\ckeditor\skins\flat\images\lock.png" />
+    <Content Include="assets-YiChun\ckeditor\skins\flat\images\refresh.png" />
+    <Content Include="assets-YiChun\ckeditor\styles.js" />
     <Content Include="assets-ZenTing\img\blog-bg.jpg" />
     <Content Include="assets-ZenTing\img\checkbox-gray.png" />
     <Content Include="assets-ZenTing\img\delete %281%29.png" />
@@ -310,34 +401,44 @@
     <Content Include="css\style.css" />
     <Content Include="css\style2.css" />
     <Content Include="css\StyleSheet.css" />
+    <Content Include="assets-YiChun\js\d3MyTaiwan.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\myTaiwan.Context.tt">
+    <Content Include="Models\MyTaiwan.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>myTaiwan.edmx</DependentUpon>
-      <LastGenOutput>myTaiwan.Context.cs</LastGenOutput>
+      <DependentUpon>MyTaiwan.edmx</DependentUpon>
+      <LastGenOutput>MyTaiwan.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\myTaiwan.tt">
+    <Content Include="Models\MyTaiwan.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>myTaiwan.edmx</DependentUpon>
-      <LastGenOutput>myTaiwan.cs</LastGenOutput>
+      <DependentUpon>MyTaiwan.edmx</DependentUpon>
+      <LastGenOutput>MyTaiwan.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Models\myTaiwan.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>myTaiwan.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\myTaiwan.edmx.diagram">
-      <DependentUpon>myTaiwan.edmx</DependentUpon>
-    </Content>
     <Content Include="css\bootstrap-theme.css.map" />
     <Content Include="css\bootstrap.css.map" />
+    <Content Include="assets-YiChun\ckeditor\CHANGES.md" />
+    <Content Include="assets-YiChun\ckeditor\LICENSE.md" />
+    <Content Include="assets-YiChun\ckeditor\README.md" />
+    <Content Include="assets-YiChun\ckeditor\samples\toolbarconfigurator\font\config.json" />
+    <Content Include="assets-YiChun\ckeditor\samples\toolbarconfigurator\font\fontello.eot" />
+    <Content Include="assets-YiChun\ckeditor\samples\toolbarconfigurator\font\fontello.ttf" />
+    <Content Include="assets-YiChun\ckeditor\samples\toolbarconfigurator\font\fontello.woff" />
+    <Content Include="assets-YiChun\ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
+    <Content Include="assets-YiChun\ckeditor\skins\flat\readme.md" />
+    <EntityDeploy Include="Models\MyTaiwan.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MyTaiwan.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\MyTaiwan.edmx.diagram">
+      <DependentUpon>MyTaiwan.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\JavaScript.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -375,8 +476,6 @@
     <Content Include="Views\Signs\Details.cshtml" />
     <Content Include="Views\Signs\Edit.cshtml" />
     <Content Include="Views\Signs\Index.cshtml" />
-    <Content Include="Views\layout\SignIn.cshtml" />
-    <Content Include="Views\layout\_LayoutIndex.cshtml" />
     <Content Include="Views\Signs\ArctileIndex.cshtml" />
     <Content Include="Views\Signs\Login.cshtml" />
     <Content Include="Views\layout\_ArctileLayout.cshtml" />
@@ -387,12 +486,14 @@
     <Content Include="Views\Signs\FriendPage.cshtml" />
     <Content Include="Views\layout\_AddTextLayout.cshtml" />
     <Content Include="Views\Signs\addText.cshtml" />
+    <Content Include="Views\add\addTest.cshtml" />
+    <Content Include="Views\layout\_AddTestLayoutTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="addTestImages\" />
     <Folder Include="App_Data\" />
     <Folder Include="assets-YiChun\css\" />
     <Folder Include="assets-YiChun\images\" />
-    <Folder Include="assets-YiChun\js\" />
     <Folder Include="assets-ZenTing\css\" />
     <Folder Include="assets-ZenTing\font-awesome\" />
     <Folder Include="assets-ZenTing\fonts\" />

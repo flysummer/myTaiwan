@@ -14,26 +14,16 @@ namespace myTaiwanTest.Models
     
     public partial class Text
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Text()
-        {
-            this.Images = new HashSet<Image>();
-            this.Pictures = new HashSet<Picture>();
-        }
-    
         public int txtID { get; set; }
         public string txtTitle { get; set; }
+        public string txtText { get; set; }
         public System.DateTime txtCreateTime { get; set; }
         public System.DateTime txtUpdateTime { get; set; }
         public int userID { get; set; }
         public int location { get; set; }
         public string locationDescription { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Image> Images { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Picture> Pictures { get; set; }
-        public virtual Sign Sign { get; set; }
         public virtual County County { get; set; }
+        public virtual Sign Sign { get; set; }
     }
 }

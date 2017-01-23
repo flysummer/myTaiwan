@@ -92,6 +92,9 @@ namespace myTaiwanTest.Controllers
 
         public ActionResult LogIn()
         {
+            //var userID = Convert.ToInt32(Session["userID"]);
+            //var text = db.Texts.Where(o => o.userID == userID);
+            //return View("DynamicIndex", text);
             return View("DynamicIndex");
         }
         //登入
@@ -147,7 +150,7 @@ namespace myTaiwanTest.Controllers
             //            };
             
             var search = db.Signs.FirstOrDefault(o => o.name == sign.name);//好友(路人)資訊
-            if(db.Friends.Count(o => o.friendID == search.ID) == 1)//有一筆資料(是好友)
+            if(db.Friends.Count(o => o.friendID == search.ID && o.userID == search.ID) == 1)//有一筆資料(是好友)
                 ViewData["isFriend"] = "true";
             else
                 ViewData["isFriend"] = "false";//其他情況(非好友)
@@ -170,17 +173,17 @@ namespace myTaiwanTest.Controllers
             db.Friends.Add(list);
             db.SaveChanges();
             ViewData["isFriend"] = "true";
-            var search = db.Signs.FirstOrDefault(o => o.ID == id);
+            var search = db.Signs.FirstOrDefault(o => o.ID == id);//搜尋好友資訊並傳入view
             return View("FriendPage", search);
         }
         //刪除好友
         public ActionResult delFriend(int id)
         {
-            Friend list = db.Friends.FirstOrDefault(o => o.friendID == id);
+            var list = db.Friends.FirstOrDefault(o => o.friendID == id && o.userID == Convert.ToInt32(Session["userID"]));
             db.Friends.Remove(list);
             db.SaveChanges();
             ViewData["isFriend"] = "false";
-            var search = db.Signs.FirstOrDefault(o => o.ID == id);
+            var search = db.Signs.FirstOrDefault(o => o.ID == id);//搜尋好友資訊並傳入view
             return View("FriendPage", search);
         }
 
@@ -189,8 +192,38 @@ namespace myTaiwanTest.Controllers
             return View();
         }
 
+        //仁廷好友列表
+        public ActionResult myFriends()
+        {
+            int UserID = Convert.ToInt32(Session["userID"]);
 
+            var query = db.Friends.Where(o => o.userID == UserID);
 
+            var friend = from o in db.Signs
+                         from f in query
+                         where o.ID == f.friendID
+                         select o;
+            List<Sign> list = friend.ToList();
+            return View("myFriends", list);
+
+        }
+        public ActionResult delFriend1(int id)
+        {
+            Friend list1 = db.Friends.FirstOrDefault(o => o.friendID == id);
+            db.Friends.Remove(list1);
+            db.SaveChanges();
+            int UserID = Convert.ToInt32(Session["userID"]);
+
+            var query = db.Friends.Where(o => o.userID == UserID);
+
+            var friend = from o in db.Signs
+                         from f in query
+                         where o.ID == f.friendID
+                         select o;
+            List<Sign> list2 = friend.ToList();
+            return View("myFriends", list2);
+
+        }
 
         //以下無用
         // GET: Signs/Edit/5

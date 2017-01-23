@@ -2371,7 +2371,21 @@ width:100%;
 }
     #bigPic > img {
     width:100%;
+
     }
+#bicHead {
+width: 150px;
+    clip-path: circle(75px at center);
+    cursor: pointer;
+    margin-top: -100px;
+
+}
+#bicSetting {
+    width: 40px;
+    margin-top: -160px;
+    margin-left: 1000px;
+    cursor: pointer;
+}
 .logo1 {
 float:left;
 }

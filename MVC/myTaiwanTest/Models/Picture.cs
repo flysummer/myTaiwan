@@ -19,7 +19,5 @@ namespace myTaiwanTest.Models
         public int txtID { get; set; }
         public int location { get; set; }
         public string picDescription { get; set; }
-    
-        public virtual Text Text { get; set; }
     }
 }

@@ -16,13 +16,13 @@
     <!-- Custom styles for this template -->
     <link href="/assets-ZenTing/css/style.css" rel="stylesheet">
     <link href="/assets-ZenTing/css/style-responsive.css" rel="stylesheet">
-
+    <script src="/assets-ZenTing/js/jquery-1.8.3.min.js"></script>
+   
 
 
 </head>
 
 <body>
-
     <section id="container">
         <!-- **********************************************************************************************************************************************************
         TOP BAR CONTENT & NOTIFICATIONS
@@ -58,7 +58,6 @@
                             <img src="/assets-ZenTing/img/logoutWhite.jpg" />
                         </a>
                     </li>
-
                     <!--<li><a class="logout" href="login.html">Logout</a></li>-->
                 </ul>
             </div>
@@ -73,14 +72,11 @@
                 <!-- sidebar menu start-->
                 <ul class="sidebar-menu" id="nav-accordion">
 
-
-
                     <li class="sub-menu">
                         <a href="/signs/LogIn">
                             <i class="fa fa-book"></i>
                             <span>動態頁</span>
                         </a>
-
                     </li>
                     <li class="sub-menu">
                         <a href="javascript:;">
@@ -98,41 +94,30 @@
                             </li>
                         </ul>
                     </li>
-
                     <li class="sub-menu">
-                        <a href="/signs/myFriend">
+                        <a href="/signs/myFriends">
                             <i class="fa fa-desktop"></i>
                             <span>好友列表</span>
                         </a>
-
                     </li>
-
-                    <li class="sub-menu">
+                    @*<li class="sub-menu">
                         <a href="javascript:;">
                             <i class="fa fa-cogs"></i>
                             <span>設定</span>
                         </a>
-                        <ul class="sub">
-                            <li><label id="changeHead">大頭貼</label></li>
-                            <li><label id="changeLandce">風景大圖</label></li>
-                            <li><label id="changePassword">密碼</label></li>
-                        </ul>
-                    </li>
+                    </li>*@
                     <li class="sub-menu">
                         <a href="javascript:;">
                             <i class="fa fa-book"></i>
                             <span>新增貼文</span>
                         </a>
-
                     </li>
                     <li class="sub-menu">
                         <a href="lock_screen.html">
                             <i class="fa fa-tasks"></i>
                             <span>Lock</span>
                         </a>
-
                     </li>
-
                 </ul>
                 <!-- sidebar menu end-->
             </div>
@@ -140,28 +125,22 @@
         <!--sidebar end-->
         <section id="main-content">
             <section class="wrapper site-min-height">
-
                 <div class="row mt">
                     <div class="col-lg-12">
 
-
                         <div class="row">
                             <div id="bigPic">
-                                <img src="/assets-ZenTing/img/instagram.jpg" />
+                                <img src="/assets-ZenTing/img/instagram.jpg" />                                
                             </div>
+                                <img src="~/assets-YiChun/images/YC.jpg" id="bicHead" />
+                                <img src="~/assets-ZenTing/img/settings-work.png" id="bicSetting" />
                         </div>
-
                         @RenderBody()
-
                         <div class="row">
-
                         </div>
-
-
 
                     </div>
                 </div>
-
             </section>
         </section><!-- /MAIN CONTENT -->
         <!-- **********************************************************************************************************************************************************
@@ -180,9 +159,8 @@
         </footer>
         <!--footer end-->
     </section>
-
     <script src="/assets-ZenTing/js/jquery.js"></script>
-    <script src="/assets-ZenTing/js/jquery-1.8.3.min.js"></script>
+    
     <script src="/assets-ZenTing/js/bootstrap.min.js"></script>
     <script class="include" type="text/javascript" src="/assets-ZenTing/js/jquery.dcjqaccordion.2.7.js"></script>
     <script src="/assets-ZenTing/js/jquery.scrollTo.min.js"></script>
@@ -237,4 +215,6 @@
         });
 
     </script>
+
+</body>
 </html>
