@@ -126,5 +126,19 @@
       <End Role="Sign" EntitySet="Signs" />
       <End Role="Texts" EntitySet="Texts" />
     </AssociationSet>
+    <FunctionImport Name="sp_BrowseText" ReturnType="Collection(myTaiwanModel.sp_BrowseText_Result)">
+      <Parameter Name="testID" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
+  <ComplexType Name="sp_BrowseText_Result">
+    <Property Type="String" Name="txtTitle" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="txtText" Nullable="false" />
+    <Property Type="DateTime" Name="txtUpdateTime" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="txtCreateTime" Nullable="false" Precision="23" />
+    <Property Type="String" Name="countryName" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="locationDescription" Nullable="false" />
+    <Property Type="String" Name="name" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="picUrl" Nullable="true" MaxLength="64" />
+    <Property Type="String" Name="imgUrl" Nullable="true" MaxLength="64" />
+  </ComplexType>
 </Schema>

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -18,6 +19,29 @@
     <link href="/assets-ZenTing/css/style-responsive.css" rel="stylesheet">
     <script src="/assets-ZenTing/js/jquery-1.8.3.min.js"></script>
    
+
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript">
+        function preImg(sourceId, targetId) {
+            if (typeof FileReader === 'undefined') {
+                alert('Your browser does not support FileReader...');
+                return;
+            }
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var img = document.getElementById(targetId);
+                img.src = this.result;
+            }
+            reader.readAsDataURL(document.getElementById(sourceId).files[0]);
+        }
+
+    </script>
 
 
 </head>
@@ -40,7 +64,7 @@
             <div class="top-menu ">
                 <ul class="nav pull-left top-menu">
                     <p class="centered">
-                        <a href="MyArctile.html"><img src="/assets-ZenTing/img/RT.jpg" class="img-circle" width="60" id="headpic"></a>
+                        <a href="/signs/ArctileIndex"><img src="/assets-ZenTing/img/RT.jpg" class="img-circle" width="60" id="headpic"></a>
                     </p>
                 </ul>
             </div>
@@ -79,20 +103,10 @@
                         </a>
                     </li>
                     <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-desktop"></i>
-                            <span>Search</span>
+                        <a href="/signs/ArctileIndex">
+                            <i class="fa fa-book"></i>
+                            <span>管理文章</span>
                         </a>
-                        <ul class="sub">
-                            <li id="options">
-                                <select id="city">
-                                    <option value="">台中</option>
-                                    <option value="">台北</option>
-                                    <option value="">台南</option>
-                                    <option value="">南投</option>
-                                </select>
-                            </li>
-                        </ul>
                     </li>
                     <li class="sub-menu">
                         <a href="/signs/myFriends">
@@ -100,24 +114,27 @@
                             <span>好友列表</span>
                         </a>
                     </li>
+                    <li class="sub-menu">
+                        <a>
+                            <i class="fa fa-desktop"></i>
+                            <span>Search</span>
+                        </a>
+                        <ul class="sub">
+                            <li id="options">
+                                <select id="city">  
+                                                               
+                                </select>
+                            </li>
+                        </ul>
+                    </li>
                     @*<li class="sub-menu">
                         <a href="javascript:;">
                             <i class="fa fa-cogs"></i>
                             <span>設定</span>
                         </a>
                     </li>*@
-                    <li class="sub-menu">
-                        <a href="javascript:;">
-                            <i class="fa fa-book"></i>
-                            <span>新增貼文</span>
-                        </a>
-                    </li>
-                    <li class="sub-menu">
-                        <a href="lock_screen.html">
-                            <i class="fa fa-tasks"></i>
-                            <span>Lock</span>
-                        </a>
-                    </li>
+                  
+                   
                 </ul>
                 <!-- sidebar menu end-->
             </div>
@@ -133,7 +150,66 @@
                                 <img src="/assets-ZenTing/img/instagram.jpg" />                                
                             </div>
                                 <img src="~/assets-YiChun/images/YC.jpg" id="bicHead" />
-                                <img src="~/assets-ZenTing/img/settings-work.png" id="bicSetting" />
+                                <img src="~/assets-ZenTing/img/settings-work.png" id="bicSetting" data-toggle="modal" data-target="#myModal" />
+                           
+                            
+                            
+                            
+                             <div class="modal fade" id="myModal" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">編輯個人資料</h4>
+
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <form action="">
+                                                <input type="file" name="imgOne" id="imgOne" onchange="preImg(this.id,'imgPre');" />
+                                                <div class="setupImage">
+                                                    <img id="imgPre" src="~/assets-ZenTing/img/instagram.jpg" class="img-thumbnail" alt="Cinque Terre" style="cursor: pointer;display: block;" />
+                                                </div>
+                                            </form>
+                                            <div><label></label></div>
+                                            <form style="float:right">
+                                                <div class="form-group modal-body">
+                                                    <label for="inputdefault">輸入現在密碼</label>
+                                                    <input class="form-control" id="inputdefault" type="text">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="inputlg">新密碼</label>
+                                                    <input class="form-control" id="inputlg" type="text">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="inputsm">確認新密碼</label>
+                                                    <input class="form-control" id="inputsm" type="text">
+                                                </div>
+
+                                            </form>
+                                            <div style="float:left">
+                                                <form action="">
+                                                    <img id="imgFace" src="~/assets-YiChun/images/YC.jpg" class="setupFaceSpace img-thumbnail" alt="Cinque Terre" style="cursor: pointer;" />
+                                                    <input type="file" name="imgTwo" id="imgTwo" onchange="preImg(this.id,'imgFace');" />
+
+                                                </form>
+
+
+
+                                            </div>
+                                            <div><label style="height:250px"></label></div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">完成編輯</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
                         </div>
                         @RenderBody()
                         <div class="row">
@@ -213,6 +289,54 @@
         $(".deleteArticle").click(function () {
             alert();
         });
+
+        $.ajax({
+            url: "http://localhost:49701/Signs/forcity",
+            type: "GET",
+            data: {
+
+            },
+            success: function (re) {
+
+            }
+        });
+
+
+        var strVoucherGroupSelect = "";
+
+        $().ready(function () {
+            getVoucherGroupData();
+        });
+
+        $("#options").append(genVoucherGroupSelect(rowID));
+
+        function genVoucherGroupSelect(rowID) {
+            return $(strVoucherGroupSelect).attr("id", "sl_" + rowID).parent().html();  //返回增加ID后的下拉框完整html
+        }
+        function getVoucherGroupData() {
+            $.ajax({
+                type: "get",
+                url: "http://localhost:49701/Signs/forcity",
+                dataType: "json",
+                data: "",
+                cache: true,
+                success: function (res) {
+                    //alert(JSON.stringify(res))
+                    var str = $("<select></select>");
+                    var option = "<option value=''></option>";
+                    for (var j = 0; j < res.length; j++) {
+                        option += "<option >" + res[j].countryName + "</option>";
+                    }
+                    
+                    $("#city").html(option);
+                    //strVoucherGroupSelect = $(str).html(option).parent().html();
+                }
+            });
+        }
+        
+       
+
+
 
     </script>
 

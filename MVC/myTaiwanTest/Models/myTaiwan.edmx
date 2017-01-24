@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="myTaiwanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="myTaiwanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Counties">
           <Key>
             <PropertyRef Name="countryID" />
@@ -106,6 +106,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_BrowseText" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="testID" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="myTaiwanModelStoreContainer">
           <EntitySet Name="Counties" EntityType="Self.Counties" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Friends" EntityType="Self.Friends" Schema="dbo" store:Type="Tables" />
@@ -126,8 +129,7 @@
             <End Role="Texts" EntitySet="Texts" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="myTaiwanModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -257,7 +259,21 @@
             <End Role="Sign" EntitySet="Signs" />
             <End Role="Texts" EntitySet="Texts" />
           </AssociationSet>
+          <FunctionImport Name="sp_BrowseText" ReturnType="Collection(myTaiwanModel.sp_BrowseText_Result)">
+            <Parameter Name="testID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="sp_BrowseText_Result">
+          <Property Type="String" Name="txtTitle" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="txtText" Nullable="false" />
+          <Property Type="DateTime" Name="txtUpdateTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="txtCreateTime" Nullable="false" Precision="23" />
+          <Property Type="String" Name="countryName" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="locationDescription" Nullable="false" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="picUrl" Nullable="true" MaxLength="64" />
+          <Property Type="String" Name="imgUrl" Nullable="true" MaxLength="64" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -329,6 +345,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_BrowseText" FunctionName="myTaiwanModel.Store.sp_BrowseText">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="myTaiwanModel.sp_BrowseText_Result">
+                <ScalarProperty Name="txtTitle" ColumnName="txtTitle" />
+                <ScalarProperty Name="txtText" ColumnName="txtText" />
+                <ScalarProperty Name="txtUpdateTime" ColumnName="txtUpdateTime" />
+                <ScalarProperty Name="txtCreateTime" ColumnName="txtCreateTime" />
+                <ScalarProperty Name="countryName" ColumnName="countryName" />
+                <ScalarProperty Name="locationDescription" ColumnName="locationDescription" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="picUrl" ColumnName="picUrl" />
+                <ScalarProperty Name="imgUrl" ColumnName="imgUrl" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

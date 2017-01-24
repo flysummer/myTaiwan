@@ -101,6 +101,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="sp_BrowseText" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="testID" Type="int" Mode="In" />
+  </Function>
   <EntityContainer Name="myTaiwanModelStoreContainer">
     <EntitySet Name="Counties" EntityType="Self.Counties" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Friends" EntityType="Self.Friends" Schema="dbo" store:Type="Tables" />

@@ -66,5 +66,20 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_BrowseText" FunctionName="myTaiwanModel.Store.sp_BrowseText">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="myTaiwanModel.sp_BrowseText_Result">
+          <ScalarProperty Name="txtTitle" ColumnName="txtTitle" />
+          <ScalarProperty Name="txtText" ColumnName="txtText" />
+          <ScalarProperty Name="txtUpdateTime" ColumnName="txtUpdateTime" />
+          <ScalarProperty Name="txtCreateTime" ColumnName="txtCreateTime" />
+          <ScalarProperty Name="countryName" ColumnName="countryName" />
+          <ScalarProperty Name="locationDescription" ColumnName="locationDescription" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="picUrl" ColumnName="picUrl" />
+          <ScalarProperty Name="imgUrl" ColumnName="imgUrl" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -12,6 +12,8 @@ namespace myTaiwanTest.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class myTaiwanEntities : DbContext
     {
@@ -31,5 +33,14 @@ namespace myTaiwanTest.Models
         public virtual DbSet<Picture> Pictures { get; set; }
         public virtual DbSet<Sign> Signs { get; set; }
         public virtual DbSet<Text> Texts { get; set; }
+    
+        public virtual ObjectResult<sp_BrowseText_Result> sp_BrowseText(Nullable<int> testID)
+        {
+            var testIDParameter = testID.HasValue ?
+                new ObjectParameter("testID", testID) :
+                new ObjectParameter("testID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_BrowseText_Result>("sp_BrowseText", testIDParameter);
+        }
     }
 }

@@ -121,7 +121,7 @@
                     return color(pd[d.properties["COUNTYNAME"]]);
                 });
         }
-        d3.select("#circle").select("p").text("你現在位於" + d.properties["COUNTYNAME"] + "!");
+        //d3.select("#circle").select("p").text("你現在位於" + d.properties["COUNTYNAME"] + "!");
 
     })
     .on("mouseout", function () {
@@ -131,6 +131,7 @@
                 return color(pd[d.properties["COUNTYNAME"]]);
             });
     });
+
 });
 
 

@@ -51,7 +51,8 @@ namespace myTaiwanTest.Controllers
         {
             public string txtTitle { set; get; }
             public string txtText { set; get; }
-            public int location { set; get; }
+            public string location { set; get; }
+            public string locationDescription { set; get; }
         }
         [HttpPost]
         public string UploadText(myPostObj obj)
@@ -62,7 +63,13 @@ namespace myTaiwanTest.Controllers
             text.txtCreateTime = DateTime.Now;
             text.txtUpdateTime = DateTime.Now;
             text.userID = Convert.ToInt32(Session["userID"]);
-            text.location = 8;
+            var county = db.Counties.FirstOrDefault(o => o.countryName == obj.location);
+            if (county != null){
+                text.location = county.countryID;
+            }
+            else {
+                text.location = 0;
+            }
             text.locationDescription = "";
             db.Texts.Add(text);
             try
@@ -71,10 +78,10 @@ namespace myTaiwanTest.Controllers
             }
             catch (Exception ex)
             {
-                return "Fail";
+                return "false";
             }
 
-            return "OK";
+            return "true";
         }
     }
 }

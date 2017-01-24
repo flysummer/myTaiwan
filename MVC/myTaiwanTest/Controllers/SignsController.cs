@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using myTaiwanTest.Models;
 
 namespace myTaiwanTest.Controllers
@@ -77,7 +78,7 @@ namespace myTaiwanTest.Controllers
                     if (query != null) {
                         Session["userName"] = query.name;
                         Session["userID"] = query.ID;
-                        return View("DynamicIndex");
+                        return RedirectToAction("BrowseText");
                     }
                     
                 }
@@ -92,11 +93,17 @@ namespace myTaiwanTest.Controllers
 
         public ActionResult LogIn()
         {
-            //var userID = Convert.ToInt32(Session["userID"]);
-            //var text = db.Texts.Where(o => o.userID == userID);
-            //return View("DynamicIndex", text);
-            return View("DynamicIndex");
+            var BrowseText = db.sp_BrowseText(1);
+            return View("DynamicIndex", BrowseText);
         }
+        //以使用者為主秀出文章
+        public ActionResult BrowseText()
+        {
+            int UserID = Convert.ToInt32(Session["userID"]);
+            var BrowseText = db.sp_BrowseText(UserID);
+            return View("DynamicIndex", BrowseText);
+        }
+
         //登入
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -116,13 +123,13 @@ namespace myTaiwanTest.Controllers
                     {
                         Session["userName"] = query.name;
                         Session["userID"] = query.ID;
-                        return View("DynamicIndex");
+                        return RedirectToAction("BrowseText");
                     }
                         
                 }
                 catch(Exception ex)
                 {
-                    throw;
+                    ;
                 }
                 
             }
@@ -179,7 +186,8 @@ namespace myTaiwanTest.Controllers
         //刪除好友
         public ActionResult delFriend(int id)
         {
-            var list = db.Friends.FirstOrDefault(o => o.friendID == id && o.userID == Convert.ToInt32(Session["userID"]));
+            var userID = Convert.ToInt32(Session["userID"]);
+            var list = db.Friends.FirstOrDefault(o => o.friendID == id && o.userID == userID);
             db.Friends.Remove(list);
             db.SaveChanges();
             ViewData["isFriend"] = "false";
@@ -223,6 +231,25 @@ namespace myTaiwanTest.Controllers
             List<Sign> list2 = friend.ToList();
             return View("myFriends", list2);
 
+        }
+
+        public string forCity()
+        {
+            var a = from o in db.Counties
+                    select o;
+
+            List<County> city = a.ToList();
+            List<cityModel> cityModel = new List<cityModel>();
+            foreach (var ct in city)
+            {
+                cityModel.Add(new cityModel { countryID = ct.countryID, countryName = ct.countryName });
+            }
+            return JsonConvert.SerializeObject(cityModel);
+        }
+        public class cityModel
+        {
+            public int countryID { set; get; }
+            public string countryName { set; get; }
         }
 
         //以下無用
