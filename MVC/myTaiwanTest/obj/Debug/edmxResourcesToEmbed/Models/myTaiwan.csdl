@@ -127,7 +127,15 @@
       <End Role="Texts" EntitySet="Texts" />
     </AssociationSet>
     <FunctionImport Name="sp_BrowseText" ReturnType="Collection(myTaiwanModel.sp_BrowseText_Result)">
-      <Parameter Name="testID" Mode="In" Type="Int32" />
+      <Parameter Name="friendID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_setCoverUrl">
+      <Parameter Name="CoverUrl" Mode="In" Type="String" />
+      <Parameter Name="userID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_setFaceUrl">
+      <Parameter Name="FaceUrl" Mode="In" Type="String" />
+      <Parameter Name="userID" Mode="In" Type="Int32" />
     </FunctionImport>
   </EntityContainer>
   <ComplexType Name="sp_BrowseText_Result">

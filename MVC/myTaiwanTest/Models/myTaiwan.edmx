@@ -107,7 +107,15 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="sp_BrowseText" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="testID" Type="int" Mode="In" />
+          <Parameter Name="friendID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_setCoverUrl" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CoverUrl" Type="varchar" Mode="In" />
+          <Parameter Name="userID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_setFaceUrl" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FaceUrl" Type="varchar" Mode="In" />
+          <Parameter Name="userID" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="myTaiwanModelStoreContainer">
           <EntitySet Name="Counties" EntityType="Self.Counties" Schema="dbo" store:Type="Tables" />
@@ -260,7 +268,15 @@
             <End Role="Texts" EntitySet="Texts" />
           </AssociationSet>
           <FunctionImport Name="sp_BrowseText" ReturnType="Collection(myTaiwanModel.sp_BrowseText_Result)">
-            <Parameter Name="testID" Mode="In" Type="Int32" />
+          <Parameter Name="friendID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_setCoverUrl">
+            <Parameter Name="CoverUrl" Mode="In" Type="String" />
+            <Parameter Name="userID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_setFaceUrl">
+            <Parameter Name="FaceUrl" Mode="In" Type="String" />
+            <Parameter Name="userID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_BrowseText_Result">
@@ -360,6 +376,8 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_setCoverUrl" FunctionName="myTaiwanModel.Store.sp_setCoverUrl" />
+          <FunctionImportMapping FunctionImportName="sp_setFaceUrl" FunctionName="myTaiwanModel.Store.sp_setFaceUrl" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

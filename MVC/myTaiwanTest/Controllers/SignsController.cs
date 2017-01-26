@@ -150,19 +150,18 @@ namespace myTaiwanTest.Controllers
         [HttpPost]
         public ActionResult searchUser([Bind(Include = "name")] Sign sign)
         {
-            //var query = from o in db.Signs
-            //            where o.name == sign.name
-            //            select new{
-            //                name = o.name
-            //            };
+            //var search = db.Signs.FirstOrDefault(o => o.name == sign.name);//好友(路人)資訊
+            //if(db.Friends.Count(o => o.friendID == search.ID && o.userID == search.ID) == 1)//有一筆資料(是好友)
+            //    ViewData["isFriend"] = "true";
+            //else
+            //    ViewData["isFriend"] = "false";//其他情況(非好友)
+            AddfriendPlusText friendPage = new AddfriendPlusText();
             
-            var search = db.Signs.FirstOrDefault(o => o.name == sign.name);//好友(路人)資訊
-            if(db.Friends.Count(o => o.friendID == search.ID && o.userID == search.ID) == 1)//有一筆資料(是好友)
-                ViewData["isFriend"] = "true";
-            else
-                ViewData["isFriend"] = "false";//其他情況(非好友)
+            var friendTextDetail = db.Signs.FirstOrDefault(o => o.name == sign.name);//好友(路人)資訊
+            friendPage.friendID = friendTextDetail.ID;
+            friendPage.browseText = db.sp_BrowseText(friendTextDetail.ID);//文章資訊
 
-            return View("FriendPage", search);
+            return View("FriendPage", friendPage);
         }
         //文章列表
         public ActionResult ArctileIndex()
@@ -172,27 +171,33 @@ namespace myTaiwanTest.Controllers
         //新增好友
         public ActionResult addFriend(int id)
         {
-            Friend list = new Friend()
-            {
+            AddfriendPlusText friendPage = new AddfriendPlusText();
+
+            Friend addFriend = new Friend() {
                 userID = Convert.ToInt32(Session["userID"]),
                 friendID = id
             };
-            db.Friends.Add(list);
+            db.Friends.Add(addFriend);
             db.SaveChanges();
-            ViewData["isFriend"] = "true";
-            var search = db.Signs.FirstOrDefault(o => o.ID == id);//搜尋好友資訊並傳入view
-            return View("FriendPage", search);
+            var friendTextDetail = db.Signs.FirstOrDefault(o => o.ID == id);//好友(路人)資訊
+            friendPage.friendID = friendTextDetail.ID;
+            friendPage.browseText = db.sp_BrowseText(friendTextDetail.ID);//文章資訊
+
+            return View("FriendPage", friendPage);
         }
-        //刪除好友
+        //刪除好友 
         public ActionResult delFriend(int id)
         {
-            var userID = Convert.ToInt32(Session["userID"]);
-            var list = db.Friends.FirstOrDefault(o => o.friendID == id && o.userID == userID);
-            db.Friends.Remove(list);
+            AddfriendPlusText friendPage = new AddfriendPlusText();
+            int UserID = Convert.ToInt32(Session["userID"]);
+            var delfriend = db.Friends.FirstOrDefault(o => o.userID == UserID && o.friendID == id);
+            db.Friends.Remove(delfriend);
             db.SaveChanges();
-            ViewData["isFriend"] = "false";
-            var search = db.Signs.FirstOrDefault(o => o.ID == id);//搜尋好友資訊並傳入view
-            return View("FriendPage", search);
+            var friendTextDetail = db.Signs.FirstOrDefault(o => o.ID == id);//好友(路人)資訊
+            friendPage.friendID = friendTextDetail.ID;
+            friendPage.browseText = db.sp_BrowseText(friendTextDetail.ID);//文章資訊
+
+            return View("FriendPage", friendPage);
         }
 
         public ActionResult addText()

@@ -81,5 +81,7 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_setCoverUrl" FunctionName="myTaiwanModel.Store.sp_setCoverUrl" />
+    <FunctionImportMapping FunctionImportName="sp_setFaceUrl" FunctionName="myTaiwanModel.Store.sp_setFaceUrl" />
   </EntityContainerMapping>
 </Mapping>

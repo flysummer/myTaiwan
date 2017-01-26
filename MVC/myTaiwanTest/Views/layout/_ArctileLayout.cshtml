@@ -1,4 +1,5 @@
-﻿
+﻿@using myTaiwanTest.Models
+@model Sign
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,7 +44,6 @@
 
     </script>
 
-
 </head>
 
 <body>
@@ -52,6 +52,8 @@
         TOP BAR CONTENT & NOTIFICATIONS
         *********************************************************************************************************************************************************** -->
         <!--header start-->
+
+        
         <header class="header black-bg">
             <div class="sidebar-toggle-box">
                 <div class="fa fa-bars tooltips" data-placement="right" data-original-title=""></div>
@@ -147,12 +149,17 @@
 
                         <div class="row">
                             <div id="bigPic">
-                                <img src="/assets-ZenTing/img/instagram.jpg" />                                
+                                @if (Model != null && Model.coverUrl != "") {<img id="iownCover" src="@Model.coverUrl" class="img-thumbnail" alt="Cinque Terre" style="cursor: pointer;display: block;" />}
+                                else { <img id="ownCover" src="~/assets-YiChun/images/SocialMap.png" class="img-thumbnail" alt="Cinque Terre" style="cursor: pointer;display: block;" />}
+                               
                             </div>
-                                <img src="~/assets-YiChun/images/YC.jpg" id="bicHead" />
+
+                            @if (Model != null && Model.faceUrl != "") {<img id="bicHead" src="@Model.faceUrl" class="setupFaceSpace img-thumbnail" alt="Cinque Terre" style="cursor: pointer;display: block;" />}
+                            else { <img id="bicHead" src="~/assets-YiChun/images/faceSocialMap.png" class="setupFaceSpace img-thumbnail" alt="Cinque Terre" style="cursor: pointer;display: block;" />}
+
+                                
                                 <img src="~/assets-ZenTing/img/settings-work.png" id="bicSetting" data-toggle="modal" data-target="#myModal" />
-                           
-                            
+
                             
                             
                              <div class="modal fade" id="myModal" role="dialog">
@@ -166,11 +173,15 @@
                                         </div>
 
                                         <div class="modal-body">
-                                            <form action="">
-                                                <input type="file" name="imgOne" id="imgOne" onchange="preImg(this.id,'imgPre');" />
+                                            <form action="/uploadImage/uploadCover" method="post" enctype="multipart/form-data" id="formImgOne">
+                                                <input type="file" name="imgOne" id="imgOne" onchange="preImg(this.id,'imgPre');"/>
                                                 <div class="setupImage">
-                                                    <img id="imgPre" src="~/assets-ZenTing/img/instagram.jpg" class="img-thumbnail" alt="Cinque Terre" style="cursor: pointer;display: block;" />
+                                                    @if (Model != null && Model.coverUrl != "")
+                                                        {<img id="imgPre" src="@Model.coverUrl" class="img-thumbnail" alt="Cinque Terre" style="cursor: pointer;display: block;" />}
+                                                    else { <img id="imgPre" src="~/assets-YiChun/images/SocialMap.png" class="img-thumbnail" alt="Cinque Terre" style="cursor: pointer;display: block;" />}
                                                 </div>
+                                           
+                                                <input type="submit" value="完成更換封面照" />
                                             </form>
                                             <div><label></label></div>
                                             <form style="float:right">
@@ -189,10 +200,14 @@
 
                                             </form>
                                             <div style="float:left">
-                                                <form action="">
-                                                    <img id="imgFace" src="~/assets-YiChun/images/YC.jpg" class="setupFaceSpace img-thumbnail" alt="Cinque Terre" style="cursor: pointer;" />
+                                                <form action="/uploadImage/uploadfaceImage" method="post" enctype="multipart/form-data" id="formImgTwo">
+                                                    @*<img id="imgFace" src="~/assets-YiChun/images/YC.jpg" class="setupFaceSpace img-thumbnail" alt="Cinque Terre" style="cursor: pointer;" />*@
+                                                    
+                                                    @if (Model != null && Model.faceUrl != "") {<img id="imgFace" src="@Model.faceUrl" class="setupFaceSpace img-thumbnail" alt="Cinque Terre" style="cursor: pointer;display: block;" />}
+                                                    else { <img id="imgFace" src="~/assets-YiChun/images/faceSocialMap.png" class="setupFaceSpace img-thumbnail" alt="Cinque Terre" style="cursor: pointer;display: block;" />}
+                                                                                                        
                                                     <input type="file" name="imgTwo" id="imgTwo" onchange="preImg(this.id,'imgFace');" />
-
+                                                    <input type="submit" value="完成更換大頭貼" />
                                                 </form>
 
 
@@ -290,16 +305,6 @@
             alert();
         });
 
-        $.ajax({
-            url: "http://localhost:49701/Signs/forcity",
-            type: "GET",
-            data: {
-
-            },
-            success: function (re) {
-
-            }
-        });
 
 
         var strVoucherGroupSelect = "";

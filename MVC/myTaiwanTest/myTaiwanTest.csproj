@@ -211,11 +211,12 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\addController.cs" />
     <Compile Include="Controllers\SignsController.cs" />
+    <Compile Include="Controllers\uploadImageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\BrowseTextModel.cs" />
+    <Compile Include="Models\AddfriendPlusText.cs" />
     <Compile Include="Models\County.cs">
       <DependentUpon>MyTaiwan.tt</DependentUpon>
     </Compile>
@@ -248,7 +249,6 @@
     <Compile Include="Models\Sign.cs">
       <DependentUpon>MyTaiwan.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SignModel.cs" />
     <Compile Include="Models\sp_BrowseText_Result.cs">
       <DependentUpon>MyTaiwan.tt</DependentUpon>
     </Compile>
@@ -349,6 +349,7 @@
     <Content Include="assets-YiChun\ckeditor\skins\flat\images\lock.png" />
     <Content Include="assets-YiChun\ckeditor\skins\flat\images\refresh.png" />
     <Content Include="assets-YiChun\ckeditor\styles.js" />
+    <Content Include="assets-YiChun\css\main.css" />
     <Content Include="assets-YiChun\js\d3.min.js" />
     <Content Include="assets-ZenTing\img\blog-bg.jpg" />
     <Content Include="assets-ZenTing\img\checkbox-gray.png" />
@@ -411,6 +412,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="image\SignInPic1.jpg" />
     <Content Include="Models\MyTaiwan.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MyTaiwan.edmx</DependentUpon>
@@ -493,18 +495,20 @@
     <Content Include="Views\Signs\addText.cshtml" />
     <Content Include="Views\add\addTest.cshtml" />
     <Content Include="Views\layout\_AddTestLayoutTest.cshtml" />
+    <Content Include="Views\uploadImage\ArctileIndex.cshtml" />
+    <Content Include="Views\Signs\myFriends.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="addTestImages\" />
     <Folder Include="App_Data\" />
-    <Folder Include="assets-YiChun\css\" />
     <Folder Include="assets-YiChun\images\" />
     <Folder Include="assets-ZenTing\css\" />
     <Folder Include="assets-ZenTing\font-awesome\" />
     <Folder Include="assets-ZenTing\fonts\" />
     <Folder Include="assets-ZenTing\js\" />
     <Folder Include="assets-ZenTing\lineicons\" />
-    <Folder Include="image\" />
+    <Folder Include="coverImage\" />
+    <Folder Include="faceImage\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

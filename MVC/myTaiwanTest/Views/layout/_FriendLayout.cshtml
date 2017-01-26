@@ -1,4 +1,5 @@
-﻿@model myTaiwanTest.Models.Sign
+﻿@using myTaiwanTest.Models
+@model AddfriendPlusText
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,15 +49,12 @@
             <li>
                 <img src="/assets-YiChun/images/YC.jpg" class="largeImageFace" />
                 <ul>
-                    @if (ViewData["isFriend"] != null && ViewData["isFriend"].ToString() == "true")
-                    {
-                        <li><button type="button" class="addFriend" onclick="toDelFriend()">解除好友</button></li>
+                    @if (Model.isFriend(Convert.ToInt32(Session["userID"]))) {
+                        <li><button type="button" class="addFriend" onclick="toDelFriend()">解除追蹤</button></li>
                     }
-                    else
-                    {
-                        <li><button type="button" class="addFriend" onclick="toAddFriend()">加入好友</button></li>
+                    else { 
+                        <li><button type="button" class="addFriend" onclick="toAddFriend()">加入追蹤</button></li>
                     }
-                    
                 </ul>
             </li>
         </ul>
@@ -86,16 +84,15 @@
         }
 
         function toAddFriend() {
-            window.location.href = "/signs/addFriend/" + @Model.ID;
+            
+
+            window.location.href = "/signs/addFriend/" + @Model.friendID;
         }
 
         function toDelFriend() {
-            window.location.href = "/signs/delFriend/" + @Model.ID;
+            window.location.href = "/signs/delFriend/" + @Model.friendID;
         }
 
-        (function(){
-            //alert("Milktea");
-        })()
     </script>
 </body>
 </html>
