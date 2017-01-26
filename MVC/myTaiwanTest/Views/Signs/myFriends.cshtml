@@ -1,5 +1,5 @@
 ﻿@using myTaiwanTest.Models
-@model List<Sign>
+@model FriendPlusDelFriend
 @{
     ViewBag.Title = "myFriends";
     Layout = "~/Views/layout/_ArctileLayout.cshtml";
@@ -11,7 +11,7 @@
         int g = 0;
         int d = 0;
 
-        foreach (var dr in Model)
+        foreach (var dr in Model.signList)
         {
             
             <div class="col-lg-3 col-md-3 col-sm-3 mb" id="(@dr.ID)">

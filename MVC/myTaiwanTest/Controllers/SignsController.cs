@@ -164,10 +164,10 @@ namespace myTaiwanTest.Controllers
             return View("FriendPage", friendPage);
         }
         //文章列表
-        public ActionResult ArctileIndex()
-        {
-            return View();
-        }
+        //public ActionResult ArctileIndex()
+        //{
+        //    return View();
+        //}
         //新增好友
         public ActionResult addFriend(int id)
         {
@@ -209,7 +209,7 @@ namespace myTaiwanTest.Controllers
         public ActionResult myFriends()
         {
             int UserID = Convert.ToInt32(Session["userID"]);
-
+            var userName = Session["userName"].ToString();
             var query = db.Friends.Where(o => o.userID == UserID);
 
             var friend = from o in db.Signs
@@ -217,11 +217,18 @@ namespace myTaiwanTest.Controllers
                          where o.ID == f.friendID
                          select o;
             List<Sign> list = friend.ToList();
-            return View("myFriends", list);
+            Sign updateFace = db.Signs.FirstOrDefault(o => o.name == userName);
+            FriendPlusDelFriend mix = new FriendPlusDelFriend()
+            {
+                sign = updateFace,
+                signList = list
+            };
+            return View("myFriends", mix);
 
         }
         public ActionResult delFriend1(int id)
         {
+            var userName = Session["userName"].ToString();
             Friend list1 = db.Friends.FirstOrDefault(o => o.friendID == id);
             db.Friends.Remove(list1);
             db.SaveChanges();
@@ -234,7 +241,13 @@ namespace myTaiwanTest.Controllers
                          where o.ID == f.friendID
                          select o;
             List<Sign> list2 = friend.ToList();
-            return View("myFriends", list2);
+            Sign updateFace = db.Signs.FirstOrDefault(o => o.name == userName);
+            FriendPlusDelFriend mix = new FriendPlusDelFriend()
+            {
+                sign = updateFace,
+                signList = list2
+            };
+            return View("myFriends", mix);
 
         }
 
@@ -255,6 +268,44 @@ namespace myTaiwanTest.Controllers
         {
             public int countryID { set; get; }
             public string countryName { set; get; }
+        }
+
+        //文章列表
+        public ActionResult ArctileIndex()
+        {
+            var userName = Session["userName"].ToString();
+            Sign updateFace = db.Signs.FirstOrDefault(o => o.name == userName);
+            int UserID = Convert.ToInt32(Session["userID"]);
+
+            var query = db.Texts.Where(o => o.userID == UserID);
+
+            var newArctile = from o in query
+                             join oo in db.Counties
+                             on o.location equals oo.countryID
+                             into ps
+                             from oo in ps.DefaultIfEmpty()
+                             select new locations
+                             {
+
+                                 txtID = o.txtID,
+                                 txtTitle = o.txtTitle,
+                                 txtText = o.txtText,
+                                 txtCreateTime = o.txtCreateTime,
+                                 city = oo.countryName
+
+                             };
+            List<locations> list = newArctile.ToList();
+            FriendPlusDelFriend mix = new FriendPlusDelFriend()
+            {
+                sign = updateFace,
+                locationInModel = list
+            };
+
+            return View("ArctileIndex", mix);
+
+
+
+            //return View();
         }
 
         //以下無用

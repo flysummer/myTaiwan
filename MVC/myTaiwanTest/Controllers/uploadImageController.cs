@@ -15,12 +15,25 @@ namespace myTaiwanTest.Controllers {
         // GET: uploadImage
         public ActionResult ArctileIndex() {
             var userName = Session["userName"].ToString();
+            int UserID = Convert.ToInt32(Session["userID"]);
             Sign updateFace = db.Signs.FirstOrDefault(o => o.name == userName);
-            return View("ArctileIndex", updateFace);
+            var query = db.Friends.Where(o => o.userID == UserID);
+
+            var friend = from o in db.Signs
+                         from f in query
+                         where o.ID == f.friendID
+                         select o;
+            List<Sign> list = friend.ToList();
+            FriendPlusDelFriend mix = new FriendPlusDelFriend() {
+                sign = updateFace,
+                signList = list
+            };
+            return View("ArctileIndex", mix);
         }
         [HttpPost]
         public ActionResult uploadCover(HttpPostedFileBase imgOne) {
             var userName = Session["userName"].ToString();
+            int UserID = Convert.ToInt32(Session["userID"]);
             if (imgOne != null && imgOne.ContentLength > 0) {
                 
                 var fileName = userName+".png";
@@ -29,11 +42,24 @@ namespace myTaiwanTest.Controllers {
                 db.sp_setCoverUrl("/coverImage/"+fileName,Convert.ToInt32(Session["userID"]));
             }
             Sign updateCover = db.Signs.FirstOrDefault(o => o.name == userName);
-            return View("ArctileIndex",updateCover);
+            var query = db.Friends.Where(o => o.userID == UserID);
+
+            var friend = from o in db.Signs
+                         from f in query
+                         where o.ID == f.friendID
+                         select o;
+            List<Sign> list = friend.ToList();
+            FriendPlusDelFriend mix = new FriendPlusDelFriend()
+            {
+                sign = updateCover,
+                signList = list
+            };
+            return View("ArctileIndex", mix);
         }
         [HttpPost]
         public ActionResult uploadfaceImage(HttpPostedFileBase imgTwo) {
             var userName = Session["userName"].ToString();
+            int UserID = Convert.ToInt32(Session["userID"]);
             if (imgTwo != null && imgTwo.ContentLength > 0) {
                 var fileName = userName+ ".png";
                 var path = Path.Combine(Server.MapPath("~/faceImage"), fileName);
@@ -41,7 +67,19 @@ namespace myTaiwanTest.Controllers {
                 db.sp_setFaceUrl("/faceImage/" + fileName, Convert.ToInt32(Session["userID"]));
             }
             Sign updateFace = db.Signs.FirstOrDefault(o => o.name == userName);
-            return View("ArctileIndex", updateFace);
+            var query = db.Friends.Where(o => o.userID == UserID);
+
+            var friend = from o in db.Signs
+                         from f in query
+                         where o.ID == f.friendID
+                         select o;
+            List<Sign> list = friend.ToList();
+            FriendPlusDelFriend mix = new FriendPlusDelFriend()
+            {
+                sign = updateFace,
+                signList = list
+            };
+            return View("ArctileIndex", mix);
         }
 
 

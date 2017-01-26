@@ -1,5 +1,5 @@
 ﻿@using myTaiwanTest.Models
-@model Sign
+@model FriendPlusDelFriend
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -149,12 +149,12 @@
 
                         <div class="row">
                             <div id="bigPic">
-                                @if (Model != null && Model.coverUrl != "") {<img id="iownCover" src="@Model.coverUrl" class="img-thumbnail" alt="Cinque Terre" style="cursor: pointer;display: block;" />}
+                                @if (Model != null && Model.sign.coverUrl != "") {<img id="iownCover" src="@Model.sign.coverUrl" class="img-thumbnail" alt="Cinque Terre" style="cursor: pointer;display: block;" />}
                                 else { <img id="ownCover" src="~/assets-YiChun/images/SocialMap.png" class="img-thumbnail" alt="Cinque Terre" style="cursor: pointer;display: block;" />}
                                
                             </div>
 
-                            @if (Model != null && Model.faceUrl != "") {<img id="bicHead" src="@Model.faceUrl" class="setupFaceSpace img-thumbnail" alt="Cinque Terre" style="cursor: pointer;display: block;" />}
+                            @if (Model != null && Model.sign.faceUrl != "") {<img id="bicHead" src="@Model.sign.faceUrl" class="setupFaceSpace img-thumbnail" alt="Cinque Terre" style="cursor: pointer;display: block;" />}
                             else { <img id="bicHead" src="~/assets-YiChun/images/faceSocialMap.png" class="setupFaceSpace img-thumbnail" alt="Cinque Terre" style="cursor: pointer;display: block;" />}
 
                                 
@@ -176,8 +176,8 @@
                                             <form action="/uploadImage/uploadCover" method="post" enctype="multipart/form-data" id="formImgOne">
                                                 <input type="file" name="imgOne" id="imgOne" onchange="preImg(this.id,'imgPre');"/>
                                                 <div class="setupImage">
-                                                    @if (Model != null && Model.coverUrl != "")
-                                                        {<img id="imgPre" src="@Model.coverUrl" class="img-thumbnail" alt="Cinque Terre" style="cursor: pointer;display: block;" />}
+                                                    @if (Model != null && Model.sign.coverUrl != "")
+                                                        {<img id="imgPre" src="@Model.sign.coverUrl" class="img-thumbnail" alt="Cinque Terre" style="cursor: pointer;display: block;" />}
                                                     else { <img id="imgPre" src="~/assets-YiChun/images/SocialMap.png" class="img-thumbnail" alt="Cinque Terre" style="cursor: pointer;display: block;" />}
                                                 </div>
                                            
@@ -203,7 +203,7 @@
                                                 <form action="/uploadImage/uploadfaceImage" method="post" enctype="multipart/form-data" id="formImgTwo">
                                                     @*<img id="imgFace" src="~/assets-YiChun/images/YC.jpg" class="setupFaceSpace img-thumbnail" alt="Cinque Terre" style="cursor: pointer;" />*@
                                                     
-                                                    @if (Model != null && Model.faceUrl != "") {<img id="imgFace" src="@Model.faceUrl" class="setupFaceSpace img-thumbnail" alt="Cinque Terre" style="cursor: pointer;display: block;" />}
+                                                    @if (Model != null && Model.sign.faceUrl != "") {<img id="imgFace" src="@Model.sign.faceUrl" class="setupFaceSpace img-thumbnail" alt="Cinque Terre" style="cursor: pointer;display: block;" />}
                                                     else { <img id="imgFace" src="~/assets-YiChun/images/faceSocialMap.png" class="setupFaceSpace img-thumbnail" alt="Cinque Terre" style="cursor: pointer;display: block;" />}
                                                                                                         
                                                     <input type="file" name="imgTwo" id="imgTwo" onchange="preImg(this.id,'imgFace');" />
