@@ -87,7 +87,7 @@ div ul li ul li{
     width: 70%;
     float: left;
     height: 575px;
-    background: #a9a9a9;
+    background: #e4e4e4;
     overflow:auto;
 }
 
@@ -108,12 +108,23 @@ div ul li ul li{
     width: 35%;
     float: left;
     height: 100%;
-    background: #00ff00;
+    background: #ff8800;
+   
 }
 .dynamicBarViewValue{
-    background-color: #f9f9f9;
+    background-color: #e4e4e4;
+    width:225px;
+    height:150px;
     background-size:cover;
     overflow: hidden;
+
+}
+.dynamicBarViewValueImage{
+   
+    height:150px;
+    float:right;
+    clip-path:circle(1000px at center);
+
 
 }
 
@@ -121,10 +132,11 @@ div ul li ul li{
     width: 65%;
     float: left;
     height: 100%;
-    background: #0000ff;
+    background: #ff8800;
+    
 }
 .dynamicBarTextValue {
-    background-color: #00ff00;
+    background-color: #ff8800;
     background-size:cover;
     margin:7px auto;
     overflow: hidden;

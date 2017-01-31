@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using myTaiwanTest.Models;
 
 namespace myTaiwanTest.Controllers
@@ -77,7 +78,7 @@ namespace myTaiwanTest.Controllers
                     if (query != null) {
                         Session["userName"] = query.name;
                         Session["userID"] = query.ID;
-                        return View("DynamicIndex");
+                        return RedirectToAction("BrowseText");
                     }
                     
                 }
@@ -92,8 +93,17 @@ namespace myTaiwanTest.Controllers
 
         public ActionResult LogIn()
         {
-            return View("DynamicIndex");
+            var BrowseText = db.sp_BrowseText(1);
+            return View("DynamicIndex", BrowseText);
         }
+        //以使用者為主秀出文章
+        public ActionResult BrowseText()
+        {
+            int UserID = Convert.ToInt32(Session["userID"]);
+            var BrowseText = db.sp_BrowseText(UserID);
+            return View("DynamicIndex", BrowseText);
+        }
+
         //登入
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -113,13 +123,13 @@ namespace myTaiwanTest.Controllers
                     {
                         Session["userName"] = query.name;
                         Session["userID"] = query.ID;
-                        return View("DynamicIndex");
+                        return RedirectToAction("BrowseText");
                     }
                         
                 }
                 catch(Exception ex)
                 {
-                    throw;
+                    ;
                 }
                 
             }
@@ -140,48 +150,54 @@ namespace myTaiwanTest.Controllers
         [HttpPost]
         public ActionResult searchUser([Bind(Include = "name")] Sign sign)
         {
-            //var query = from o in db.Signs
-            //            where o.name == sign.name
-            //            select new{
-            //                name = o.name
-            //            };
+            //var search = db.Signs.FirstOrDefault(o => o.name == sign.name);//好友(路人)資訊
+            //if(db.Friends.Count(o => o.friendID == search.ID && o.userID == search.ID) == 1)//有一筆資料(是好友)
+            //    ViewData["isFriend"] = "true";
+            //else
+            //    ViewData["isFriend"] = "false";//其他情況(非好友)
+            AddfriendPlusText friendPage = new AddfriendPlusText();
             
-            var search = db.Signs.FirstOrDefault(o => o.name == sign.name);//好友(路人)資訊
-            if(db.Friends.Count(o => o.friendID == search.ID) == 1)//有一筆資料(是好友)
-                ViewData["isFriend"] = "true";
-            else
-                ViewData["isFriend"] = "false";//其他情況(非好友)
+            var friendTextDetail = db.Signs.FirstOrDefault(o => o.name == sign.name);//好友(路人)資訊
+            friendPage.friendID = friendTextDetail.ID;
+            friendPage.browseText = db.sp_BrowseText(friendTextDetail.ID);//文章資訊
 
-            return View("FriendPage", search);
+            return View("FriendPage", friendPage);
         }
         //文章列表
-        public ActionResult ArctileIndex()
-        {
-            return View();
-        }
+        //public ActionResult ArctileIndex()
+        //{
+        //    return View();
+        //}
         //新增好友
         public ActionResult addFriend(int id)
         {
-            Friend list = new Friend()
-            {
+            AddfriendPlusText friendPage = new AddfriendPlusText();
+
+            Friend addFriend = new Friend() {
                 userID = Convert.ToInt32(Session["userID"]),
                 friendID = id
             };
-            db.Friends.Add(list);
+            db.Friends.Add(addFriend);
             db.SaveChanges();
-            ViewData["isFriend"] = "true";
-            var search = db.Signs.FirstOrDefault(o => o.ID == id);
-            return View("FriendPage", search);
+            var friendTextDetail = db.Signs.FirstOrDefault(o => o.ID == id);//好友(路人)資訊
+            friendPage.friendID = friendTextDetail.ID;
+            friendPage.browseText = db.sp_BrowseText(friendTextDetail.ID);//文章資訊
+
+            return View("FriendPage", friendPage);
         }
-        //刪除好友
+        //刪除好友 
         public ActionResult delFriend(int id)
         {
-            Friend list = db.Friends.FirstOrDefault(o => o.friendID == id);
-            db.Friends.Remove(list);
+            AddfriendPlusText friendPage = new AddfriendPlusText();
+            int UserID = Convert.ToInt32(Session["userID"]);
+            var delfriend = db.Friends.FirstOrDefault(o => o.userID == UserID && o.friendID == id);
+            db.Friends.Remove(delfriend);
             db.SaveChanges();
-            ViewData["isFriend"] = "false";
-            var search = db.Signs.FirstOrDefault(o => o.ID == id);
-            return View("FriendPage", search);
+            var friendTextDetail = db.Signs.FirstOrDefault(o => o.ID == id);//好友(路人)資訊
+            friendPage.friendID = friendTextDetail.ID;
+            friendPage.browseText = db.sp_BrowseText(friendTextDetail.ID);//文章資訊
+
+            return View("FriendPage", friendPage);
         }
 
         public ActionResult addText()
@@ -189,8 +205,108 @@ namespace myTaiwanTest.Controllers
             return View();
         }
 
+        //仁廷好友列表
+        public ActionResult myFriends()
+        {
+            int UserID = Convert.ToInt32(Session["userID"]);
+            var userName = Session["userName"].ToString();
+            var query = db.Friends.Where(o => o.userID == UserID);
+
+            var friend = from o in db.Signs
+                         from f in query
+                         where o.ID == f.friendID
+                         select o;
+            List<Sign> list = friend.ToList();
+            Sign updateFace = db.Signs.FirstOrDefault(o => o.name == userName);
+            FriendPlusDelFriend mix = new FriendPlusDelFriend()
+            {
+                sign = updateFace,
+                signList = list
+            };
+            return View("myFriends", mix);
+
+        }
+        public ActionResult delFriend1(int id)
+        {
+            var userName = Session["userName"].ToString();
+            Friend list1 = db.Friends.FirstOrDefault(o => o.friendID == id);
+            db.Friends.Remove(list1);
+            db.SaveChanges();
+            int UserID = Convert.ToInt32(Session["userID"]);
+
+            var query = db.Friends.Where(o => o.userID == UserID);
+
+            var friend = from o in db.Signs
+                         from f in query
+                         where o.ID == f.friendID
+                         select o;
+            List<Sign> list2 = friend.ToList();
+            Sign updateFace = db.Signs.FirstOrDefault(o => o.name == userName);
+            FriendPlusDelFriend mix = new FriendPlusDelFriend()
+            {
+                sign = updateFace,
+                signList = list2
+            };
+            return View("myFriends", mix);
+
+        }
+
+        public string forCity()
+        {
+            var a = from o in db.Counties
+                    select o;
+
+            List<County> city = a.ToList();
+            List<cityModel> cityModel = new List<cityModel>();
+            foreach (var ct in city)
+            {
+                cityModel.Add(new cityModel { countryID = ct.countryID, countryName = ct.countryName });
+            }
+            return JsonConvert.SerializeObject(cityModel);
+        }
+        public class cityModel
+        {
+            public int countryID { set; get; }
+            public string countryName { set; get; }
+        }
+
+        //文章列表
+        public ActionResult ArctileIndex()
+        {
+            var userName = Session["userName"].ToString();
+            Sign updateFace = db.Signs.FirstOrDefault(o => o.name == userName);
+            int UserID = Convert.ToInt32(Session["userID"]);
+
+            var query = db.Texts.Where(o => o.userID == UserID);
+
+            var newArctile = from o in query
+                             join oo in db.Counties
+                             on o.location equals oo.countryID
+                             into ps
+                             from oo in ps.DefaultIfEmpty()
+                             select new locations
+                             {
+
+                                 txtID = o.txtID,
+                                 txtTitle = o.txtTitle,
+                                 txtText = o.txtText,
+                                 txtCreateTime = o.txtCreateTime,
+                                 city = oo.countryName
+
+                             };
+            List<locations> list = newArctile.ToList();
+            FriendPlusDelFriend mix = new FriendPlusDelFriend()
+            {
+                sign = updateFace,
+                locationInModel = list
+            };
+
+            return View("ArctileIndex", mix);
 
 
+
+            //return View();
+        }
 
         //以下無用
         // GET: Signs/Edit/5

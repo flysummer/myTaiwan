@@ -43,16 +43,16 @@
     <Property Name="name" Type="varchar" MaxLength="30" Nullable="false" />
     <Property Name="passwords" Type="varchar" MaxLength="64" Nullable="false" />
     <Property Name="email" Type="varchar" MaxLength="64" Nullable="false" />
-    <Property Name="faceUrl" Type="varchar" MaxLength="64" />
+    <Property Name="faceUrl" Type="varchar" MaxLength="64" Nullable="false" />
     <Property Name="coverUrl" Type="varchar" MaxLength="64" Nullable="false" />
   </EntityType>
   <EntityType Name="Texts">
     <Key>
       <PropertyRef Name="txtID" />
-      <PropertyRef Name="location" />
     </Key>
     <Property Name="txtID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="txtTitle" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="txtText" Type="nvarchar(max)" Nullable="false" />
     <Property Name="txtCreateTime" Type="datetime" Nullable="false" />
     <Property Name="txtUpdateTime" Type="datetime" Nullable="false" />
     <Property Name="userID" Type="int" Nullable="false" />
@@ -70,38 +70,6 @@
       </Principal>
       <Dependent Role="Friends">
         <PropertyRef Name="userID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Images__4CA06362">
-    <End Role="Texts" Type="Self.Texts" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Images" Type="Self.Images" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Texts">
-        <PropertyRef Name="txtID" />
-        <PropertyRef Name="location" />
-      </Principal>
-      <Dependent Role="Images">
-        <PropertyRef Name="txtID" />
-        <PropertyRef Name="location" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__Pictures__59FA5E80">
-    <End Role="Texts" Type="Self.Texts" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Pictures" Type="Self.Pictures" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Texts">
-        <PropertyRef Name="txtID" />
-        <PropertyRef Name="location" />
-      </Principal>
-      <Dependent Role="Pictures">
-        <PropertyRef Name="txtID" />
-        <PropertyRef Name="location" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -133,6 +101,17 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="sp_BrowseText" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="friendID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_setCoverUrl" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CoverUrl" Type="varchar" Mode="In" />
+    <Parameter Name="userID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_setFaceUrl" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FaceUrl" Type="varchar" Mode="In" />
+    <Parameter Name="userID" Type="int" Mode="In" />
+  </Function>
   <EntityContainer Name="myTaiwanModelStoreContainer">
     <EntitySet Name="Counties" EntityType="Self.Counties" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Friends" EntityType="Self.Friends" Schema="dbo" store:Type="Tables" />
@@ -143,14 +122,6 @@
     <AssociationSet Name="FK__Friends__userID__25869641" Association="Self.FK__Friends__userID__25869641">
       <End Role="Sign" EntitySet="Sign" />
       <End Role="Friends" EntitySet="Friends" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Images__4CA06362" Association="Self.FK__Images__4CA06362">
-      <End Role="Texts" EntitySet="Texts" />
-      <End Role="Images" EntitySet="Images" />
-    </AssociationSet>
-    <AssociationSet Name="FK__Pictures__59FA5E80" Association="Self.FK__Pictures__59FA5E80">
-      <End Role="Texts" EntitySet="Texts" />
-      <End Role="Pictures" EntitySet="Pictures" />
     </AssociationSet>
     <AssociationSet Name="FK__Texts__location__08B54D69" Association="Self.FK__Texts__location__08B54D69">
       <End Role="Counties" EntitySet="Counties" />

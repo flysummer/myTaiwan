@@ -48,16 +48,16 @@
           <Property Name="name" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="passwords" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="email" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="faceUrl" Type="varchar" MaxLength="64" />
+          <Property Name="faceUrl" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="coverUrl" Type="varchar" MaxLength="64" Nullable="false" />
         </EntityType>
         <EntityType Name="Texts">
           <Key>
             <PropertyRef Name="txtID" />
-            <PropertyRef Name="location" />
           </Key>
           <Property Name="txtID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="txtTitle" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="txtText" Type="nvarchar(max)" Nullable="false" />
           <Property Name="txtCreateTime" Type="datetime" Nullable="false" />
           <Property Name="txtUpdateTime" Type="datetime" Nullable="false" />
           <Property Name="userID" Type="int" Nullable="false" />
@@ -75,38 +75,6 @@
             </Principal>
             <Dependent Role="Friends">
               <PropertyRef Name="userID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Images__4CA06362">
-          <End Role="Texts" Type="Self.Texts" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Images" Type="Self.Images" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Texts">
-              <PropertyRef Name="txtID" />
-              <PropertyRef Name="location" />
-            </Principal>
-            <Dependent Role="Images">
-              <PropertyRef Name="txtID" />
-              <PropertyRef Name="location" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Pictures__59FA5E80">
-          <End Role="Texts" Type="Self.Texts" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Pictures" Type="Self.Pictures" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Texts">
-              <PropertyRef Name="txtID" />
-              <PropertyRef Name="location" />
-            </Principal>
-            <Dependent Role="Pictures">
-              <PropertyRef Name="txtID" />
-              <PropertyRef Name="location" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -138,6 +106,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_BrowseText" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="friendID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_setCoverUrl" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CoverUrl" Type="varchar" Mode="In" />
+          <Parameter Name="userID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_setFaceUrl" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FaceUrl" Type="varchar" Mode="In" />
+          <Parameter Name="userID" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="myTaiwanModelStoreContainer">
           <EntitySet Name="Counties" EntityType="Self.Counties" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Friends" EntityType="Self.Friends" Schema="dbo" store:Type="Tables" />
@@ -148,14 +127,6 @@
           <AssociationSet Name="FK__Friends__userID__25869641" Association="Self.FK__Friends__userID__25869641">
             <End Role="Sign" EntitySet="Sign" />
             <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Images__4CA06362" Association="Self.FK__Images__4CA06362">
-            <End Role="Texts" EntitySet="Texts" />
-            <End Role="Images" EntitySet="Images" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Pictures__59FA5E80" Association="Self.FK__Pictures__59FA5E80">
-            <End Role="Texts" EntitySet="Texts" />
-            <End Role="Pictures" EntitySet="Pictures" />
           </AssociationSet>
           <AssociationSet Name="FK__Texts__location__08B54D69" Association="Self.FK__Texts__location__08B54D69">
             <End Role="Counties" EntitySet="Counties" />
@@ -176,13 +147,13 @@
           </Key>
           <Property Name="countryID" Type="Int32" Nullable="false" />
           <Property Name="countryName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Texts" Relationship="myTaiwanModel.FK__Texts__location__08B54D69" FromRole="County" ToRole="Text" />
+          <NavigationProperty Name="Texts" Relationship="Self.FK__Texts__location__08B54D69" FromRole="Counties" ToRole="Texts" />
         </EntityType>
         <EntityType Name="Friend">
           <Key>
             <PropertyRef Name="FID" />
           </Key>
-          <Property Name="FID" Type="Int32" Nullable="false" />
+          <Property Name="FID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="userID" Type="Int32" Nullable="false" />
           <Property Name="friendID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Sign" Relationship="Self.FK__Friends__userID__25869641" FromRole="Friends" ToRole="Sign" />
@@ -196,7 +167,6 @@
           <Property Name="txtID" Type="Int32" Nullable="false" />
           <Property Name="location" Type="Int32" Nullable="false" />
           <Property Name="imgDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Text" Relationship="Self.FK__Images__4CA06362" FromRole="Images" ToRole="Texts" />
         </EntityType>
         <EntityType Name="Picture">
           <Key>
@@ -207,7 +177,6 @@
           <Property Name="txtID" Type="Int32" Nullable="false" />
           <Property Name="location" Type="Int32" Nullable="false" />
           <Property Name="picDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Text" Relationship="Self.FK__Pictures__59FA5E80" FromRole="Pictures" ToRole="Texts" />
         </EntityType>
         <EntityType Name="Sign">
           <Key>
@@ -217,7 +186,7 @@
           <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="passwords" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="faceUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="faceUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="coverUrl" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Friends" Relationship="Self.FK__Friends__userID__25869641" FromRole="Sign" ToRole="Friends" />
           <NavigationProperty Name="Texts" Relationship="Self.FK__Texts__userID__2B3F6F97" FromRole="Sign" ToRole="Texts" />
@@ -225,20 +194,32 @@
         <EntityType Name="Text">
           <Key>
             <PropertyRef Name="txtID" />
-            <PropertyRef Name="location" />
           </Key>
           <Property Name="txtID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="txtTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="txtText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="txtCreateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="txtUpdateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="userID" Type="Int32" Nullable="false" />
           <Property Name="location" Type="Int32" Nullable="false" />
           <Property Name="locationDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Images" Relationship="Self.FK__Images__4CA06362" FromRole="Texts" ToRole="Images" />
-          <NavigationProperty Name="Pictures" Relationship="Self.FK__Pictures__59FA5E80" FromRole="Texts" ToRole="Pictures" />
+          <NavigationProperty Name="County" Relationship="Self.FK__Texts__location__08B54D69" FromRole="Texts" ToRole="Counties" />
           <NavigationProperty Name="Sign" Relationship="Self.FK__Texts__userID__2B3F6F97" FromRole="Texts" ToRole="Sign" />
-          <NavigationProperty Name="County" Relationship="myTaiwanModel.FK__Texts__location__08B54D69" FromRole="Text" ToRole="County" />
         </EntityType>
+        <Association Name="FK__Texts__location__08B54D69">
+          <End Role="Counties" Type="Self.County" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Texts" Type="Self.Text" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Counties">
+              <PropertyRef Name="countryID" />
+            </Principal>
+            <Dependent Role="Texts">
+              <PropertyRef Name="location" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Friends__userID__25869641">
           <End Role="Sign" Type="Self.Sign" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -250,38 +231,6 @@
             </Principal>
             <Dependent Role="Friends">
               <PropertyRef Name="userID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Images__4CA06362">
-          <End Role="Texts" Type="Self.Text" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Images" Type="Self.Image" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Texts">
-              <PropertyRef Name="txtID" />
-              <PropertyRef Name="location" />
-            </Principal>
-            <Dependent Role="Images">
-              <PropertyRef Name="txtID" />
-              <PropertyRef Name="location" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Pictures__59FA5E80">
-          <End Role="Texts" Type="Self.Text" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Pictures" Type="Self.Picture" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Texts">
-              <PropertyRef Name="txtID" />
-              <PropertyRef Name="location" />
-            </Principal>
-            <Dependent Role="Pictures">
-              <PropertyRef Name="txtID" />
-              <PropertyRef Name="location" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -306,41 +255,41 @@
           <EntitySet Name="Pictures" EntityType="Self.Picture" />
           <EntitySet Name="Signs" EntityType="Self.Sign" />
           <EntitySet Name="Texts" EntityType="Self.Text" />
+          <AssociationSet Name="FK__Texts__location__08B54D69" Association="Self.FK__Texts__location__08B54D69">
+            <End Role="Counties" EntitySet="Counties" />
+            <End Role="Texts" EntitySet="Texts" />
+          </AssociationSet>
           <AssociationSet Name="FK__Friends__userID__25869641" Association="Self.FK__Friends__userID__25869641">
             <End Role="Sign" EntitySet="Signs" />
             <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Images__4CA06362" Association="Self.FK__Images__4CA06362">
-            <End Role="Texts" EntitySet="Texts" />
-            <End Role="Images" EntitySet="Images" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Pictures__59FA5E80" Association="Self.FK__Pictures__59FA5E80">
-            <End Role="Texts" EntitySet="Texts" />
-            <End Role="Pictures" EntitySet="Pictures" />
           </AssociationSet>
           <AssociationSet Name="FK__Texts__userID__2B3F6F97" Association="Self.FK__Texts__userID__2B3F6F97">
             <End Role="Sign" EntitySet="Signs" />
             <End Role="Texts" EntitySet="Texts" />
           </AssociationSet>
-          <AssociationSet Name="FK__Texts__location__08B54D69" Association="myTaiwanModel.FK__Texts__location__08B54D69">
-            <End Role="County" EntitySet="Counties" />
-            <End Role="Text" EntitySet="Texts" />
-          </AssociationSet>
+          <FunctionImport Name="sp_BrowseText" ReturnType="Collection(myTaiwanModel.sp_BrowseText_Result)">
+          <Parameter Name="friendID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_setCoverUrl">
+            <Parameter Name="CoverUrl" Mode="In" Type="String" />
+            <Parameter Name="userID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_setFaceUrl">
+            <Parameter Name="FaceUrl" Mode="In" Type="String" />
+            <Parameter Name="userID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
-        <Association Name="FK__Texts__location__08B54D69">
-          <End Type="myTaiwanModel.County" Role="County" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="myTaiwanModel.Text" Role="Text" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="County">
-              <PropertyRef Name="countryID" />
-            </Principal>
-            <Dependent Role="Text">
-              <PropertyRef Name="location" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <ComplexType Name="sp_BrowseText_Result">
+          <Property Type="String" Name="txtTitle" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="txtText" Nullable="false" />
+          <Property Type="DateTime" Name="txtUpdateTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="txtCreateTime" Nullable="false" Precision="23" />
+          <Property Type="String" Name="countryName" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="locationDescription" Nullable="false" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="picUrl" Nullable="true" MaxLength="64" />
+          <Property Type="String" Name="imgUrl" Nullable="true" MaxLength="64" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -403,6 +352,7 @@
               <MappingFragment StoreEntitySet="Texts">
                 <ScalarProperty Name="txtID" ColumnName="txtID" />
                 <ScalarProperty Name="txtTitle" ColumnName="txtTitle" />
+                <ScalarProperty Name="txtText" ColumnName="txtText" />
                 <ScalarProperty Name="txtCreateTime" ColumnName="txtCreateTime" />
                 <ScalarProperty Name="txtUpdateTime" ColumnName="txtUpdateTime" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
@@ -411,6 +361,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_BrowseText" FunctionName="myTaiwanModel.Store.sp_BrowseText">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="myTaiwanModel.sp_BrowseText_Result">
+                <ScalarProperty Name="txtTitle" ColumnName="txtTitle" />
+                <ScalarProperty Name="txtText" ColumnName="txtText" />
+                <ScalarProperty Name="txtUpdateTime" ColumnName="txtUpdateTime" />
+                <ScalarProperty Name="txtCreateTime" ColumnName="txtCreateTime" />
+                <ScalarProperty Name="countryName" ColumnName="countryName" />
+                <ScalarProperty Name="locationDescription" ColumnName="locationDescription" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="picUrl" ColumnName="picUrl" />
+                <ScalarProperty Name="imgUrl" ColumnName="imgUrl" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_setCoverUrl" FunctionName="myTaiwanModel.Store.sp_setCoverUrl" />
+          <FunctionImportMapping FunctionImportName="sp_setFaceUrl" FunctionName="myTaiwanModel.Store.sp_setFaceUrl" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

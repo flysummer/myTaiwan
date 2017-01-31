@@ -12,6 +12,8 @@ namespace myTaiwanTest.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class myTaiwanEntities : DbContext
     {
@@ -31,5 +33,40 @@ namespace myTaiwanTest.Models
         public virtual DbSet<Picture> Pictures { get; set; }
         public virtual DbSet<Sign> Signs { get; set; }
         public virtual DbSet<Text> Texts { get; set; }
+    
+        public virtual ObjectResult<sp_BrowseText_Result> sp_BrowseText(Nullable<int> friendID)
+        {
+            var friendIDParameter = friendID.HasValue ?
+                new ObjectParameter("friendID", friendID) :
+                new ObjectParameter("friendID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_BrowseText_Result>("sp_BrowseText", friendIDParameter);
+        }
+    
+        public virtual int sp_setCoverUrl(string coverUrl, Nullable<int> userID)
+        {
+            var coverUrlParameter = coverUrl != null ?
+                new ObjectParameter("CoverUrl", coverUrl) :
+                new ObjectParameter("CoverUrl", typeof(string));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("userID", userID) :
+                new ObjectParameter("userID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_setCoverUrl", coverUrlParameter, userIDParameter);
+        }
+    
+        public virtual int sp_setFaceUrl(string faceUrl, Nullable<int> userID)
+        {
+            var faceUrlParameter = faceUrl != null ?
+                new ObjectParameter("FaceUrl", faceUrl) :
+                new ObjectParameter("FaceUrl", typeof(string));
+    
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("userID", userID) :
+                new ObjectParameter("userID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_setFaceUrl", faceUrlParameter, userIDParameter);
+        }
     }
 }

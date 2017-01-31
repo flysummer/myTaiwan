@@ -10,14 +10,17 @@
 namespace myTaiwanTest.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Image
+    public partial class sp_BrowseText_Result
     {
-        public int imageID { get; set; }
+        public string txtTitle { get; set; }
+        public string txtText { get; set; }
+        public System.DateTime txtUpdateTime { get; set; }
+        public System.DateTime txtCreateTime { get; set; }
+        public string countryName { get; set; }
+        public string locationDescription { get; set; }
+        public string name { get; set; }
+        public string picUrl { get; set; }
         public string imgUrl { get; set; }
-        public int txtID { get; set; }
-        public int location { get; set; }
-        public string imgDescription { get; set; }
     }
 }
