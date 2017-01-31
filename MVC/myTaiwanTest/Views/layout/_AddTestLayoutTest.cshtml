@@ -1,16 +1,5 @@
-﻿@*<!DOCTYPE html>
-
-    <html>
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <title>@ViewBag.Title</title>
-    </head>
-    <body>
-        <div>
-            @RenderBody()
-        </div>
-    </body>
-    </html>*@
+﻿@using myTaiwanTest.Models
+@model AddEditTextModel
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,6 +15,23 @@
     @*引用ckeditor.js*@
     <!-- ↓Add↓ -->
     <script src="/assets-YiChun/ckeditor/ckeditor.js"></script>
+    <!-- ↓Add Picture↓ -->
+    <script type="text/javascript">
+        function preImg(sourceId, targetId) {
+            if (typeof FileReader === 'undefined') {
+                alert('Your browser does not support FileReader...');
+                return;
+            }
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var img = document.getElementById(targetId);
+                img.src = this.result;
+            }
+            reader.readAsDataURL(document.getElementById(sourceId).files[0]);
+        }
+
+    </script>
 </head>
 <body>
     <div class="header">
@@ -33,7 +39,12 @@
             <div>
                 <ul class="title-area">
                     <li><img src="/assets-YiChun/images/header.png" class="logo" /></li>
-                    <li><img src="/assets-YiChun/images/YC.jpg" class="logoface" /></li>
+                    @if (Model.sign != null && Model.sign.faceUrl != "") {
+                        <li><img src="@Model.sign.faceUrl" class="logoface" /></li>
+                    }
+                    else {
+                        <li><img src="/assets-YiChun/images/YC.jpg" class="logoface" /></li>
+                    }
                     <li><label>@Session["userName"]</label></li>
                 </ul>
             </div>
@@ -52,32 +63,36 @@
             </section>
         </nav>
     </div>
-    <div class="dynamicImageSpace">
-        <!--        <img src="/assets-YiChun/images/high-resolutionImage.jpg" class="largeImage"/>-->
-        <img src="/assets-YiChun/images/R0011094.jpg" class="largeImage" />
-    </div>
-    <div class="dynamicBodySpace">
-        <div class="taiwanBar">
-            <svg width="100%" height="575px"></svg>
-
+    <!-- ↓Add Picture's HTML↓ -->
+    <form action="/add/uploadImage" method="post" enctype="multipart/form-data" id="formImgTwo">
+        <div class="dynamicImageSpace">
+            <!--        <img src="/assets-YiChun/images/high-resolutionImage.jpg" class="largeImage"/>-->
+            <img src="/assets-YiChun/images/R0011094.jpg" class="largeImage" id="imgPre" />
         </div>
-        @*原寫法*@
-        @*<div class="addTextTable">
-                <form name='form' action='#' method='post'>
-                    <textarea name="myText" id="content" rows="10" cols="80"></textarea>
+        <input type="file" name="imgOne" id="imgOne" onchange="preImg(this.id,'imgPre');" />
+    </form>
+        <div class="dynamicBodySpace">
+            <div class="taiwanBar">
+                <svg width="100%" height="575px"></svg>
+
+            </div>
+            @*原寫法*@
+            @*<div class="addTextTable">
+                    <form name='form' action='#' method='post'>
+                        <textarea name="myText" id="content" rows="10" cols="80"></textarea>
+                        <input style="float:right" type='button' value='新增貼文' onclick='processData()'>
+                    </form>
+                </div>*@
+            @*新寫法*@
+            <div class="addTextTable">
+                @*<form action="/add/UploadPicture" method="post" id="textForm">*@
+                    <label style="font-family:DFKai-sb;font-size:30px">文章標題：</label><input type="text" class="addTextTitle" name="txtTitle" id="txtTitle" style="border:4px solid #0078a0;font-size:25px;font-family:Microsoft JhengHei;border-radius:10px;height: 40px;width: 400px;" />
+                    @*textarea加上class="ckeditor"*@
+                    @Html.TextArea("myText", new { @class = "ckeditor", @rows = "10", @cols = "80" })
                     <input style="float:right" type='button' value='新增貼文' onclick='processData()'>
-                </form>
-            </div>*@
-        @*新寫法*@
-        <div>
-            <form action="/add/UploadPicture" method="post" id="textForm">
-                <label>標題：</label><input type="text" name="txtTitle" id="txtTitle" />
-                @*textarea加上class="ckeditor"*@
-                @Html.TextArea("myText", new { @class = "ckeditor", @rows = "10", @cols = "80" })
-                <input style="float:right" type='button' value='新增貼文' onclick='processData()'>
-            </form>
-        </div>
-
+                @*</form>*@
+            </div>
+    
     </div>
     @RenderBody()
     <!--↓d3↓  -->
@@ -92,15 +107,16 @@
             var upLoad = {
                 txtTitle: $("#txtTitle").val(),
                 txtText: data,
-                location:county
+                location: county
             }
             $.ajax({
                 url: "/add/UploadText",
                 type: "post",
-                contentType:"application/json;charset=utf-8",
+                contentType: "application/json;charset=utf-8",
                 success: function (data) {
                     if (data != "false")
-                        window.location.href = "/signs/BrowseText";
+                        $("form").submit();
+                        //window.location.href = "/signs/BrowseText";
                     else
                         alert("輸入錯誤，有空格沒填喔!!");
                 },
@@ -109,7 +125,7 @@
                 },
                 data: JSON.stringify(upLoad)
             });
-
+            
         }
         var county = "";
         d3.json("/assets-YiChun/js/taiwanChi.json", function (geojson) {
@@ -247,7 +263,7 @@
             });
 
         });
-            
+
 
     </script>
 </body>

@@ -4,21 +4,22 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using myTaiwanTest.Models;
+using System.IO;
 
 namespace myTaiwanTest.Controllers
 {
     public class addController : Controller
     {
         private myTaiwanEntities db = new myTaiwanEntities();
-        // GET: add
-        public ActionResult Index()
-        {
-            return View();
-        }
 
         // GET: add/addTest
         public ActionResult addTest() {
-            return View();
+            var userID = Convert.ToInt32(Session["userID"]);
+            var sign = db.Signs.FirstOrDefault(o => o.ID == userID);
+            AddEditTextModel mix = new AddEditTextModel() {
+                sign = sign
+            };
+            return View(mix);
         }
         
         /// <summary>
@@ -53,6 +54,7 @@ namespace myTaiwanTest.Controllers
             public string txtText { set; get; }
             public string location { set; get; }
             public string locationDescription { set; get; }
+            public HttpPostedFileBase imgOne { set; get; }
         }
         [HttpPost]
         public string UploadText(myPostObj obj)
@@ -82,6 +84,36 @@ namespace myTaiwanTest.Controllers
             }
 
             return "true";
+        }
+
+        [HttpPost]
+        public ActionResult uploadImage(HttpPostedFileBase imgOne) {
+            var userID = Convert.ToInt32(Session["userID"]);
+            var userName = Session["userName"].ToString();
+            var sign = db.Signs.FirstOrDefault(o => o.ID == userID);
+            //因為Linq不支援Last語法，所以需要先轉成物件(使用toList())之後，才能使用Last()
+            var nextText = (from o in db.Texts
+                            select o.txtID).ToList().Last();//因為還沒新增文章，所以找到文章列表的最後一份文章ID，然後加一
+            
+            AddEditTextModel mix = new AddEditTextModel() {
+                sign = sign
+            };
+            
+            if (imgOne != null && imgOne.ContentLength > 0) {
+
+                var fileName = userName + "-" + nextText + ".png";//Ex:Milktea123-11.png
+                var path = Path.Combine(Server.MapPath("~/Pictures"), fileName);
+                imgOne.SaveAs(path);
+                Picture picture = new Picture();
+                picture.picUrl = "/Pictures/" + fileName;
+                picture.txtID = nextText;
+                picture.location = 0;
+                picture.picDescription = "";
+                db.Pictures.Add(picture);
+                db.SaveChanges();
+            }
+
+            return Redirect("/signs/BrowseText");
         }
     }
 }

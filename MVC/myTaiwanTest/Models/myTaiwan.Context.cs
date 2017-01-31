@@ -68,5 +68,18 @@ namespace myTaiwanTest.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_setFaceUrl", faceUrlParameter, userIDParameter);
         }
+    
+        public virtual ObjectResult<sp_BrowseTextbyCounty_Result> sp_BrowseTextbyCounty(Nullable<int> friendID, Nullable<int> location)
+        {
+            var friendIDParameter = friendID.HasValue ?
+                new ObjectParameter("friendID", friendID) :
+                new ObjectParameter("friendID", typeof(int));
+    
+            var locationParameter = location.HasValue ?
+                new ObjectParameter("location", location) :
+                new ObjectParameter("location", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_BrowseTextbyCounty_Result>("sp_BrowseTextbyCounty", friendIDParameter, locationParameter);
+        }
     }
 }

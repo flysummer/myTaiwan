@@ -1,5 +1,5 @@
 ﻿@using myTaiwanTest.Models
-@model IEnumerable<sp_BrowseText_Result>
+@model AddfriendPlusText
 @{
     ViewBag.Title = "DynamicIndex";
     Layout = "~/Views/layout/_DynamicLayout.cshtml";
@@ -8,15 +8,18 @@
 @* 挖洞 *@
 <div class="dynamicTable">
     <ul class="dynamicBar">
-        @if (Model != null)
-        {
-            foreach (var dr in Model)
-            {
-                <li class="dynamicTextSpace">
+        @if (Model != null) {
+            if (Model.browseText != null) {
+                foreach (var dr in Model.browseText) {
+                    <li class="dynamicTextSpace">
                     <div class="dynamicBarView">
                         <div class="dynamicBarViewValue">
-                            <img src="~/image/SignInPic1.jpg" class="dynamicBarViewValueImage" />
-                            
+                            @if (dr.picUrl != "" && dr.picUrl != null) {
+                                <img src="@dr.picUrl" class="dynamicBarViewValueImage" />
+                            }
+                            else {
+                                <img src="~/image/SignInPic1.jpg" class="dynamicBarViewValueImage" />
+                            }
                         </div>
                     </div>
                     <div class="dynamicBarText">
@@ -27,7 +30,32 @@
                             <div style="word-break: break-all">@Html.Raw(dr.txtText)</div>
                         </div>
                     </div>
-                </li>
+                    </li>
+                }
+            }
+            else {
+                foreach (var dr in Model.browseTextbyCounty) {
+                    <li class="dynamicTextSpace">
+                        <div class="dynamicBarView">
+                            <div class="dynamicBarViewValue">
+                                @if (dr.picUrl != "" && dr.picUrl != null) {
+                                    <img src="@dr.picUrl" class="dynamicBarViewValueImage" />
+                                }
+                                else {
+                                    <img src="~/image/SignInPic1.jpg" class="dynamicBarViewValueImage" />
+                                }
+                            </div>
+                        </div>
+                        <div class="dynamicBarText">
+                            <div class="dynamicBarTextValue">
+                                <label style="font-size:larger">@dr.name</label><br />
+                                <label style="font-size:large;float:left">@dr.countryName</label>
+                                <label style="font-size:large;float:right">@dr.txtUpdateTime</label><br />
+                                <div style="word-break: break-all">@Html.Raw(dr.txtText)</div>
+                            </div>
+                        </div>
+                    </li>
+                }
             }
         }
         @*<li class="dynamicTextSpace">
@@ -45,15 +73,5 @@
                     </div>
                 </div>
             </li>*@
-
-        <li class="dynamicTextSpace">
-
-        </li>
-        <li class="dynamicTextSpace">
-
-        </li>
-        <li class="dynamicTextSpace">
-
-        </li>
     </ul>
 </div>

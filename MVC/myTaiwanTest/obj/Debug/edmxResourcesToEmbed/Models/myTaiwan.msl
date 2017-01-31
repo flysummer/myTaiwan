@@ -83,5 +83,21 @@
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_setCoverUrl" FunctionName="myTaiwanModel.Store.sp_setCoverUrl" />
     <FunctionImportMapping FunctionImportName="sp_setFaceUrl" FunctionName="myTaiwanModel.Store.sp_setFaceUrl" />
+    <FunctionImportMapping FunctionImportName="sp_BrowseTextbyCounty" FunctionName="myTaiwanModel.Store.sp_BrowseTextbyCounty">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="myTaiwanModel.sp_BrowseTextbyCounty_Result">
+          <ScalarProperty Name="txtTitle" ColumnName="txtTitle" />
+          <ScalarProperty Name="txtText" ColumnName="txtText" />
+          <ScalarProperty Name="txtUpdateTime" ColumnName="txtUpdateTime" />
+          <ScalarProperty Name="txtCreateTime" ColumnName="txtCreateTime" />
+          <ScalarProperty Name="countryName" ColumnName="countryName" />
+          <ScalarProperty Name="locationDescription" ColumnName="locationDescription" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="picUrl" ColumnName="picUrl" />
+          <ScalarProperty Name="imgUrl" ColumnName="imgUrl" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

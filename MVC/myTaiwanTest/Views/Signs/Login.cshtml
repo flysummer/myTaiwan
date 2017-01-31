@@ -62,7 +62,7 @@
                     @Html.ValidationSummary(true)
                     <div class="sign-in-htm">
                         <div class="group">
-                            <label for="user" class="label">Username</label>
+                            <label for="user" class="label" onclick="speedLogIn()">Username</label>
                             <input id="user" name="name" type="text" class="input">
                         </div>
                         <div class="group">
@@ -88,7 +88,7 @@
                     @Html.ValidationSummary(true)
                     <div class="sign-up-htm">
                         <div class="group">
-                            <label for="user" class="label" onclick="speedLogIn()">Username</label>
+                            <label for="user" class="label" onclick="speedSignIn()">Username</label>
                             <input id="user1" name="name" type="text" class="input">
                         </div>
                         <div class="group">
@@ -116,11 +116,16 @@
         </div>
     </div>
     <script>
-        function speedLogIn() {
+        function speedSignIn() {
             $("#user1").val("345");
             $("#pass1").val("345");
             $("#passcheck").val("345");
             $("#email1").val("345@345");
+        }
+
+        function speedLogIn() {
+            $("#user").val("Milktea123");
+            $("#pass").val("MilkteaPass");
         }
     </script>
 

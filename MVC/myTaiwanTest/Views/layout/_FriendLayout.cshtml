@@ -21,7 +21,12 @@
             <div>
                 <ul class="title-area">
                     <li><img src="/assets-YiChun/images/header.png" class="logo" onclick="toDynamic()"/></li>
-                    <li><img src="/assets-YiChun/images/YC.jpg" class="logoface" onclick="toArctile()"/></li>
+                    @if (Model == null || Model.sign.faceUrl == "") {
+                        <li><img src="/assets-YiChun/images/YC.jpg" class="logoface" onclick="toArctile()" /></li>
+                    }
+                    else {
+                        <li><img src="@Model.sign.faceUrl" class="logoface" onclick="toArctile()" /></li>
+                    }
                     <li><label onclick="toArctile()">@Session["userName"]</label></li>
                 </ul>
             </div>
@@ -29,7 +34,7 @@
             <section>
                 <ul>
                     <li class="section-icon"><a><img src="/assets-YiChun/images/logout.png" class="top-icon" onclick="toLogout()"/></a></li>
-                    <li class="section-icon"><a><img src="/assets-YiChun/images/add.png" class="top-icon" /></a></li>
+                    <li class="section-icon"><a><img src="/assets-YiChun/images/add.png" class="top-icon" onclick="toText()"/></a></li>
                     <li class="section-search">
                         <form action="/signs/searchUser" method="post">
                             <input type="button" class="search_map" />
@@ -47,7 +52,13 @@
         <img src="/assets-YiChun/images/R0011094.jpg" class="largeImage" />
         <ul>
             <li>
-                <img src="/assets-YiChun/images/YC.jpg" class="largeImageFace" />
+                @if (Model == null || Model.FriendSign.faceUrl == "") {
+                    <img src="/assets-YiChun/images/YC.jpg" class="largeImageFace" />
+                }
+                else {
+                    <img src="@Model.FriendSign.faceUrl" class="largeImageFace" />
+                }
+
                 <ul>
                     @if (Model.isFriend(Convert.ToInt32(Session["userID"]))) {
                         <li><button type="button" class="addFriend" onclick="toDelFriend()">解除追蹤</button></li>
@@ -84,9 +95,13 @@
         }
 
         function toAddFriend() {
-            
+
 
             window.location.href = "/signs/addFriend/" + @Model.friendID;
+        }
+
+        function toText() {
+            window.location.href = "/add/addTest"
         }
 
         function toDelFriend() {

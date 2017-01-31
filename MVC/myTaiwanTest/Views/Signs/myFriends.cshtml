@@ -11,19 +11,24 @@
         int g = 0;
         int d = 0;
 
-        foreach (var dr in Model.signList)
+        foreach (var dr in Model.friendList)
         {
             
             <div class="col-lg-3 col-md-3 col-sm-3 mb" id="(@dr.ID)">
                 <div class="content-panel pn">
                     <div id="profile-02">
                         <div class="user">
-                            <img src="/assets-ZenTing/img/RT.jpg" class="img-circle" width="80" style="cursor: pointer;">
+                            @if (Model == null || dr.faceUrl == "") {
+                                <img src="/assets-ZenTing/img/RT.jpg" class="img-circle" width="80" style="cursor: pointer;">
+                            }
+                            else {
+                                <img src="@dr.faceUrl" class="img-circle" width="80" style="cursor: pointer;">
+                            }
                             <h4>@dr.name</h4>
                         </div>
                     </div>
                     <div class="pr2-social centered">
-                        <img src="/assets-ZenTing/img/house-visiting (1).png" class="img1" style="cursor: pointer;" id="imgg@(g++)">
+                        <img src="/assets-ZenTing/img/house-visiting (1).png" class="img1" style="cursor: pointer;" onclick="visitMyFriend(@dr.ID)" id="imgg@(g++)">
                         <img src="/assets-ZenTing/img/delete (1).png" class="img-circle img2" style="cursor: pointer;" onclick="del(@dr.ID)" id="imgd@(d++)" />
 
                     </div>
@@ -38,6 +43,10 @@
 
     function del(id) {
         window.location.href = "/signs/delFriend1/"+id;
+    }
+
+    function visitMyFriend(id) {
+        window.location.href = "/signs/searchUser/"+id;
     }
 
    

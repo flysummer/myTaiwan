@@ -14,7 +14,7 @@
                     <div id="blog-bg">
                         <div class="blog-title">@articles.city</div>
                         <div class="blog-btn" id="manger" onclick="mangerarticle()">
-                            <p onclick="">刪除貼文</p>
+                            <p onclick="delText(@articles.txtID)">刪除貼文</p>
                         </div>
                     </div>
                     <div class="blog-text">
@@ -30,3 +30,10 @@
 
     }
 </div>  
+
+<script>
+    function delText(id) {
+        window.location.href = "/signs/delText/"+id;
+    }
+
+</script>

@@ -104,6 +104,10 @@
   <Function Name="sp_BrowseText" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="friendID" Type="int" Mode="In" />
   </Function>
+  <Function Name="sp_BrowseTextbyCounty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="friendID" Type="int" Mode="In" />
+    <Parameter Name="location" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_setCoverUrl" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="CoverUrl" Type="varchar" Mode="In" />
     <Parameter Name="userID" Type="int" Mode="In" />

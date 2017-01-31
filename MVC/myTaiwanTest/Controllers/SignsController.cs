@@ -93,15 +93,38 @@ namespace myTaiwanTest.Controllers
 
         public ActionResult LogIn()
         {
-            var BrowseText = db.sp_BrowseText(1);
-            return View("DynamicIndex", BrowseText);
+            int UserID = Convert.ToInt32(Session["userID"]);
+            var sign = db.Signs.FirstOrDefault(o => o.ID == UserID);
+            var BrowseText = db.sp_BrowseText(UserID);
+            AddfriendPlusText mix = new AddfriendPlusText() {
+                browseText = BrowseText,
+                sign = sign
+            };
+            return View("DynamicIndex", mix);
         }
         //以使用者為主秀出文章
         public ActionResult BrowseText()
         {
             int UserID = Convert.ToInt32(Session["userID"]);
+            var sign = db.Signs.FirstOrDefault(o => o.ID == UserID);
             var BrowseText = db.sp_BrowseText(UserID);
-            return View("DynamicIndex", BrowseText);
+            AddfriendPlusText mix = new AddfriendPlusText() {
+                browseText = BrowseText,
+                sign = sign
+            };
+            return View("DynamicIndex", mix);
+        }
+        //以使用者為主秀出文章(限定地區)
+        public ActionResult BrowseTextByCounty(string id) {
+            int UserID = Convert.ToInt32(Session["userID"]);
+            var sign = db.Signs.FirstOrDefault(o => o.ID == UserID);
+            var countyID = db.Counties.First(c => c.countryName == id).countryID;
+            var BrowseText = db.sp_BrowseTextbyCounty(UserID, countyID);
+            AddfriendPlusText mix = new AddfriendPlusText() {
+                browseTextbyCounty = BrowseText,
+                sign = sign,
+            };
+            return View("DynamicIndex", mix);
         }
 
         //登入
@@ -148,19 +171,31 @@ namespace myTaiwanTest.Controllers
         }
         //尋找好友(路人) //由searchtext取得資料
         [HttpPost]
-        public ActionResult searchUser([Bind(Include = "name")] Sign sign)
+        public ActionResult searchUser([Bind(Include = "name")] Sign signFriend)
         {
-            //var search = db.Signs.FirstOrDefault(o => o.name == sign.name);//好友(路人)資訊
-            //if(db.Friends.Count(o => o.friendID == search.ID && o.userID == search.ID) == 1)//有一筆資料(是好友)
-            //    ViewData["isFriend"] = "true";
-            //else
-            //    ViewData["isFriend"] = "false";//其他情況(非好友)
+            int UserID = Convert.ToInt32(Session["userID"]);
+            var sign = db.Signs.FirstOrDefault(o => o.ID == UserID);
             AddfriendPlusText friendPage = new AddfriendPlusText();
             
-            var friendTextDetail = db.Signs.FirstOrDefault(o => o.name == sign.name);//好友(路人)資訊
+            var friendTextDetail = db.Signs.FirstOrDefault(o => o.name == signFriend.name);//好友(路人)資訊
             friendPage.friendID = friendTextDetail.ID;
             friendPage.browseText = db.sp_BrowseText(friendTextDetail.ID);//文章資訊
+            friendPage.FriendSign = friendTextDetail;
+            friendPage.sign = sign;
 
+            return View("FriendPage", friendPage);
+        }
+        //尋找好友 //由好友ID搜尋
+        public ActionResult searchUser(int id) {
+            int UserID = Convert.ToInt32(Session["userID"]);
+            var sign = db.Signs.FirstOrDefault(o => o.ID == UserID);
+            AddfriendPlusText friendPage = new AddfriendPlusText();
+
+            var friendTextDetail = db.Signs.FirstOrDefault(o => o.ID == id);//好友資訊
+            friendPage.friendID = friendTextDetail.ID;
+            friendPage.browseText = db.sp_BrowseText(friendTextDetail.ID);//文章資訊
+            friendPage.FriendSign = friendTextDetail;
+            friendPage.sign = sign;
             return View("FriendPage", friendPage);
         }
         //文章列表
@@ -171,6 +206,8 @@ namespace myTaiwanTest.Controllers
         //新增好友
         public ActionResult addFriend(int id)
         {
+            int UserID = Convert.ToInt32(Session["userID"]);
+            var sign = db.Signs.FirstOrDefault(o => o.ID == UserID);
             AddfriendPlusText friendPage = new AddfriendPlusText();
 
             Friend addFriend = new Friend() {
@@ -182,27 +219,36 @@ namespace myTaiwanTest.Controllers
             var friendTextDetail = db.Signs.FirstOrDefault(o => o.ID == id);//好友(路人)資訊
             friendPage.friendID = friendTextDetail.ID;
             friendPage.browseText = db.sp_BrowseText(friendTextDetail.ID);//文章資訊
+            friendPage.FriendSign = friendTextDetail;
+            friendPage.sign = sign;
 
             return View("FriendPage", friendPage);
         }
         //刪除好友 
         public ActionResult delFriend(int id)
         {
-            AddfriendPlusText friendPage = new AddfriendPlusText();
             int UserID = Convert.ToInt32(Session["userID"]);
+            var sign = db.Signs.FirstOrDefault(o => o.ID == UserID);
+            AddfriendPlusText friendPage = new AddfriendPlusText();
             var delfriend = db.Friends.FirstOrDefault(o => o.userID == UserID && o.friendID == id);
             db.Friends.Remove(delfriend);
             db.SaveChanges();
             var friendTextDetail = db.Signs.FirstOrDefault(o => o.ID == id);//好友(路人)資訊
             friendPage.friendID = friendTextDetail.ID;
             friendPage.browseText = db.sp_BrowseText(friendTextDetail.ID);//文章資訊
+            friendPage.FriendSign = friendTextDetail;
+            friendPage.sign = sign;
 
             return View("FriendPage", friendPage);
         }
 
-        public ActionResult addText()
-        {
-            return View();
+        //public ActionResult addText()
+        //{
+        //    return View();
+        //}
+
+        public ActionResult singleText() {
+            return View("SingleText");
         }
 
         //仁廷好友列表
@@ -221,7 +267,7 @@ namespace myTaiwanTest.Controllers
             FriendPlusDelFriend mix = new FriendPlusDelFriend()
             {
                 sign = updateFace,
-                signList = list
+                friendList = list
             };
             return View("myFriends", mix);
 
@@ -245,7 +291,7 @@ namespace myTaiwanTest.Controllers
             FriendPlusDelFriend mix = new FriendPlusDelFriend()
             {
                 sign = updateFace,
-                signList = list2
+                friendList = list2
             };
             return View("myFriends", mix);
 
@@ -302,10 +348,15 @@ namespace myTaiwanTest.Controllers
             };
 
             return View("ArctileIndex", mix);
+        }
 
+        //從文章列表刪除文章
+        public ActionResult delText(int id) {
+            var text = db.Texts.Find(id);
+            db.Texts.Remove(text);
+            db.SaveChanges();
 
-
-            //return View();
+            return RedirectToAction("ArctileIndex");
         }
 
         //以下無用

@@ -26,7 +26,7 @@ namespace myTaiwanTest.Controllers {
             List<Sign> list = friend.ToList();
             FriendPlusDelFriend mix = new FriendPlusDelFriend() {
                 sign = updateFace,
-                signList = list
+                friendList = list
             };
             return View("ArctileIndex", mix);
         }
@@ -52,9 +52,9 @@ namespace myTaiwanTest.Controllers {
             FriendPlusDelFriend mix = new FriendPlusDelFriend()
             {
                 sign = updateCover,
-                signList = list
+                friendList = list
             };
-            return View("ArctileIndex", mix);
+            return Redirect("/signs/ArctileIndex");
         }
         [HttpPost]
         public ActionResult uploadfaceImage(HttpPostedFileBase imgTwo) {
@@ -77,9 +77,9 @@ namespace myTaiwanTest.Controllers {
             FriendPlusDelFriend mix = new FriendPlusDelFriend()
             {
                 sign = updateFace,
-                signList = list
+                friendList = list
             };
-            return View("ArctileIndex", mix);
+            return Redirect("/signs/ArctileIndex");
         }
 
 
