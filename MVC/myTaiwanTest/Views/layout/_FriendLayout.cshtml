@@ -49,7 +49,14 @@
 
     <div class="dynamicImageSpace">
         <!--        <img src="/assets-YiChun/images/high-resolutionImage.jpg" class="largeImage"/>-->
-        <img src="/assets-YiChun/images/R0011094.jpg" class="largeImage" />
+        @if (Model == null || Model.sign.coverUrl == "")
+        {
+            <img src="/assets-YiChun/images/R0011094.jpg" class="largeImage" />
+        }
+        else
+        {
+            <img src="@Model.sign.coverUrl" class="largeImage" />
+        }
         <ul>
             <li>
                 @if (Model == null || Model.FriendSign.faceUrl == "") {

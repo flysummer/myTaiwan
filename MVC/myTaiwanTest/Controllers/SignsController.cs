@@ -247,7 +247,12 @@ namespace myTaiwanTest.Controllers
         //    return View();
         //}
 
-        public ActionResult singleText() {
+        public ActionResult singleText(int id) {
+            int UserID = Convert.ToInt32(Session["userID"]);
+            var sign = db.Signs.FirstOrDefault(o => o.ID == UserID);
+
+            AddEditTextModel single = new AddEditTextModel();
+
             return View("SingleText");
         }
 

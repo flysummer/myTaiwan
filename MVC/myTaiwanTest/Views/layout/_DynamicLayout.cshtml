@@ -50,8 +50,14 @@
 
     <div class="dynamicImageSpace">
         <!--<img src="/assets-YiChun/images/high-resolutionImage.jpg" class="largeImage"/>-->
-
-        <img src="@Model.sign.coverUrl" class="largeImage" />
+        @if (Model == null || Model.sign.coverUrl == "")
+        {
+            <img src="/assets-YiChun/images/R0011094.jpg" class="largeImage" />
+        }
+        else
+        {
+            <img src="@Model.sign.coverUrl" class="largeImage" />
+        }
     </div>
     <div class="dynamicBodySpace">
         <div class="taiwanBar">

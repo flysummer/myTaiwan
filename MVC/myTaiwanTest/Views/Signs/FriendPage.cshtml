@@ -14,7 +14,14 @@
                 <li class="dynamicTextSpace">
                     <div class="dynamicBarView">
                         <div class="dynamicBarViewValue">
-                            <img src="/image/SignInPic1.jpg" class="dynamicBarViewValueImage">
+                            @if (dr.picUrl != "" && dr.picUrl != null)
+                            {
+                                <img src="@dr.picUrl" class="dynamicBarViewValueImage" />
+                            }
+                            else
+                            {
+                                <img src="~/image/SignInPic1.jpg" class="dynamicBarViewValueImage" />
+                            }
                         </div>
                     </div>
                     <div class="dynamicBarText">
