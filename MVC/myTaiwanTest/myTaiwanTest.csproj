@@ -252,6 +252,9 @@
     <Compile Include="Models\Sign.cs">
       <DependentUpon>MyTaiwan.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_BrowseSingleText_Result.cs">
+      <DependentUpon>MyTaiwan.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_BrowseTextbyCounty_Result.cs">
       <DependentUpon>MyTaiwan.tt</DependentUpon>
     </Compile>

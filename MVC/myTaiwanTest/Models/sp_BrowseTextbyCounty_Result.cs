@@ -13,6 +13,7 @@ namespace myTaiwanTest.Models
     
     public partial class sp_BrowseTextbyCounty_Result
     {
+        public int txtID { get; set; }
         public string txtTitle { get; set; }
         public string txtText { get; set; }
         public System.DateTime txtUpdateTime { get; set; }

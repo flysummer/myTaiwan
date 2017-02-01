@@ -106,6 +106,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_BrowseSingleText" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="txtID" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_BrowseText" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="friendID" Type="int" Mode="In" />
         </Function>
@@ -274,6 +277,10 @@
           <FunctionImport Name="sp_BrowseText" ReturnType="Collection(myTaiwanModel.sp_BrowseText_Result)">
           <Parameter Name="friendID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="sp_BrowseTextbyCounty" ReturnType="Collection(myTaiwanModel.sp_BrowseTextbyCounty_Result)">
+            <Parameter Name="friendID" Mode="In" Type="Int32" />
+            <Parameter Name="location" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="sp_setCoverUrl">
             <Parameter Name="CoverUrl" Mode="In" Type="String" />
             <Parameter Name="userID" Mode="In" Type="Int32" />
@@ -282,12 +289,12 @@
             <Parameter Name="FaceUrl" Mode="In" Type="String" />
             <Parameter Name="userID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_BrowseTextbyCounty" ReturnType="Collection(myTaiwanModel.sp_BrowseTextbyCounty_Result)">
-            <Parameter Name="friendID" Mode="In" Type="Int32" />
-            <Parameter Name="location" Mode="In" Type="Int32" />
+          <FunctionImport Name="sp_BrowseSingleText" ReturnType="Collection(myTaiwanModel.sp_BrowseSingleText_Result)">
+            <Parameter Name="txtID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_BrowseText_Result">
+          <Property Type="Int32" Name="txtID" Nullable="false" />
           <Property Type="String" Name="txtTitle" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="txtText" Nullable="false" />
           <Property Type="DateTime" Name="txtUpdateTime" Nullable="false" Precision="23" />
@@ -295,10 +302,25 @@
           <Property Type="String" Name="countryName" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="locationDescription" Nullable="false" />
           <Property Type="String" Name="name" Nullable="false" MaxLength="30" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="picUrl" Nullable="true" MaxLength="64" />
           <Property Type="String" Name="imgUrl" Nullable="true" MaxLength="64" />
         </ComplexType>
         <ComplexType Name="sp_BrowseTextbyCounty_Result">
+          <Property Type="Int32" Name="txtID" Nullable="false" />
+          <Property Type="String" Name="txtTitle" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="txtText" Nullable="false" />
+          <Property Type="DateTime" Name="txtUpdateTime" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="txtCreateTime" Nullable="false" Precision="23" />
+          <Property Type="String" Name="countryName" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="locationDescription" Nullable="false" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="30" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="picUrl" Nullable="true" MaxLength="64" />
+          <Property Type="String" Name="imgUrl" Nullable="true" MaxLength="64" />
+        </ComplexType>
+        <ComplexType Name="sp_BrowseSingleText_Result">
+          <Property Type="Int32" Name="txtID" Nullable="false" />
           <Property Type="String" Name="txtTitle" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="txtText" Nullable="false" />
           <Property Type="DateTime" Name="txtUpdateTime" Nullable="false" Precision="23" />
@@ -384,6 +406,7 @@
           <FunctionImportMapping FunctionImportName="sp_BrowseText" FunctionName="myTaiwanModel.Store.sp_BrowseText">
             <ResultMapping>
               <ComplexTypeMapping TypeName="myTaiwanModel.sp_BrowseText_Result">
+                <ScalarProperty Name="txtID" ColumnName="txtID" />
                 <ScalarProperty Name="txtTitle" ColumnName="txtTitle" />
                 <ScalarProperty Name="txtText" ColumnName="txtText" />
                 <ScalarProperty Name="txtUpdateTime" ColumnName="txtUpdateTime" />
@@ -391,6 +414,24 @@
                 <ScalarProperty Name="countryName" ColumnName="countryName" />
                 <ScalarProperty Name="locationDescription" ColumnName="locationDescription" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="picUrl" ColumnName="picUrl" />
+                <ScalarProperty Name="imgUrl" ColumnName="imgUrl" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_BrowseTextbyCounty" FunctionName="myTaiwanModel.Store.sp_BrowseTextbyCounty">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="myTaiwanModel.sp_BrowseTextbyCounty_Result">
+                <ScalarProperty Name="txtID" ColumnName="txtID" />
+                <ScalarProperty Name="txtTitle" ColumnName="txtTitle" />
+                <ScalarProperty Name="txtText" ColumnName="txtText" />
+                <ScalarProperty Name="txtUpdateTime" ColumnName="txtUpdateTime" />
+                <ScalarProperty Name="txtCreateTime" ColumnName="txtCreateTime" />
+                <ScalarProperty Name="countryName" ColumnName="countryName" />
+                <ScalarProperty Name="locationDescription" ColumnName="locationDescription" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="picUrl" ColumnName="picUrl" />
                 <ScalarProperty Name="imgUrl" ColumnName="imgUrl" />
               </ComplexTypeMapping>
@@ -398,9 +439,10 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_setCoverUrl" FunctionName="myTaiwanModel.Store.sp_setCoverUrl" />
           <FunctionImportMapping FunctionImportName="sp_setFaceUrl" FunctionName="myTaiwanModel.Store.sp_setFaceUrl" />
-          <FunctionImportMapping FunctionImportName="sp_BrowseTextbyCounty" FunctionName="myTaiwanModel.Store.sp_BrowseTextbyCounty">
+          <FunctionImportMapping FunctionImportName="sp_BrowseSingleText" FunctionName="myTaiwanModel.Store.sp_BrowseSingleText">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="myTaiwanModel.sp_BrowseTextbyCounty_Result">
+              <ComplexTypeMapping TypeName="myTaiwanModel.sp_BrowseSingleText_Result">
+                <ScalarProperty Name="txtID" ColumnName="txtID" />
                 <ScalarProperty Name="txtTitle" ColumnName="txtTitle" />
                 <ScalarProperty Name="txtText" ColumnName="txtText" />
                 <ScalarProperty Name="txtUpdateTime" ColumnName="txtUpdateTime" />

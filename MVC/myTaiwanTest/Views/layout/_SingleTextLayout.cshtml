@@ -21,15 +21,24 @@
             <div>
                 <ul class="title-area">
                     <li><img src="/assets-YiChun/images/header.png" class="logo" /></li>
-                    <li><img src="/assets-YiChun/images/YC.jpg" class="logoface" /></li>
-                    <li><label>UserID</label></li>
+
+                    @if (Model == null || Model.sign.faceUrl == "")
+                    {
+                        <li><img src="/assets-YiChun/images/YC.jpg" class="logoface" onclick="toArctile()" /></li>
+                    }
+                    else
+                    {
+                        <li><img src="@Model.sign.faceUrl" class="logoface" onclick="toArctile()" /></li>
+                    }
+
+                    <li><label onclick="toArctile()">@Session["userName"]</label></li>
                 </ul>
             </div>
 
             <section>
                 <ul>
-                    <li class="section-icon"><a><img src="/assets-YiChun/images/logout.png" class="top-icon" /></a></li>
-                    <li class="section-icon"><a><img src="/assets-YiChun/images/add.png" class="top-icon" /></a></li>
+                    <li class="section-icon"><a><img src="/assets-YiChun/images/logout.png" class="top-icon" onclick="toLogout()"/></a></li>
+                    <li class="section-icon"><a><img src="/assets-YiChun/images/add.png" class="top-icon" onclick="toText()"/></a></li>
                     <li class="section-search">
                         <form action="" method="get">
                             <input type="button" class="search_map" />
@@ -45,7 +54,14 @@
     <div class="dynamicImageSpace">
         <!--        <img src="/assets-YiChun/images/high-resolutionImage.jpg" class="largeImage"/>-->
 
-        <img src="/assets-YiChun/images/R0011094.jpg" class="largeImage" />
+        @if (Model == null || Model.SingleText.picUrl == "")
+        {
+            <img src="/assets-YiChun/images/R0011094.jpg" class="largeImage" />
+        }
+        else
+        {
+            <img src="@Model.SingleText.picUrl" class="largeImage" />
+        }
     </div>
     <div class="dynamicBodySpace">
         <div class="taiwanBar">
@@ -58,6 +74,26 @@
             
         </div>
     </div>
+
+    <script>
+        function toArctile() {
+            window.location.href = "/signs/ArctileIndex"
+        }
+
+        function toDynamic() {
+            window.location.href = "/signs/Login"
+        }
+
+        function toLogout() {
+            window.location.href = "/signs/SignIn"
+        }
+
+        function toText() {
+            window.location.href = "/add/addTest"
+        }
+
+    </script>
+
     <!--↓d3↓  -->
     <script>
         d3.json("/assets-YiChun/js/taiwanChi.json", function (geojson) {

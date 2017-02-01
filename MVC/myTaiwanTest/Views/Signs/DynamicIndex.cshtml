@@ -11,7 +11,7 @@
         @if (Model != null) {
             if (Model.browseText != null) {
                 foreach (var dr in Model.browseText) {
-                    <li class="dynamicTextSpace">
+                    <li class="dynamicTextSpace" onclick="singleText(@dr.txtID)">
                     <div class="dynamicBarView">
                         <div class="dynamicBarViewValue">
                             @if (dr.picUrl != "" && dr.picUrl != null) {
@@ -35,7 +35,7 @@
             }
             else {
                 foreach (var dr in Model.browseTextbyCounty) {
-                    <li class="dynamicTextSpace">
+                    <li class="dynamicTextSpace" onclick="singleText(@dr.txtID)">
                         <div class="dynamicBarView">
                             <div class="dynamicBarViewValue">
                                 @if (dr.picUrl != "" && dr.picUrl != null) {
@@ -75,3 +75,10 @@
             </li>*@
     </ul>
 </div>
+
+<script>
+    function singleText(txtID) {
+        window.location.href = "/signs/singleText/" + txtID;
+
+    }
+</script>

@@ -13,6 +13,7 @@ namespace myTaiwanTest.Models
     
     public partial class sp_BrowseText_Result
     {
+        public int txtID { get; set; }
         public string txtTitle { get; set; }
         public string txtText { get; set; }
         public System.DateTime txtUpdateTime { get; set; }
@@ -20,6 +21,7 @@ namespace myTaiwanTest.Models
         public string countryName { get; set; }
         public string locationDescription { get; set; }
         public string name { get; set; }
+        public int ID { get; set; }
         public string picUrl { get; set; }
         public string imgUrl { get; set; }
     }

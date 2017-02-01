@@ -246,14 +246,17 @@ namespace myTaiwanTest.Controllers
         //{
         //    return View();
         //}
-
+        
+        //瀏覽單篇文章
         public ActionResult singleText(int id) {
             int UserID = Convert.ToInt32(Session["userID"]);
             var sign = db.Signs.FirstOrDefault(o => o.ID == UserID);
-
-            AddEditTextModel single = new AddEditTextModel();
-
-            return View("SingleText");
+            var Text = db.sp_BrowseSingleText(id).FirstOrDefault();
+            AddEditTextModel singleText = new AddEditTextModel() {
+                sign = sign,
+                SingleText = Text
+            };
+            return View("SingleText", singleText);
         }
 
         //仁廷好友列表

@@ -4,11 +4,11 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e94e2b08aeb3407eb5076615eda400b0" Name="Diagram1">
+      <Diagram DiagramId="abbda8ba11504b169fe1dfdc675d3d4e" Name="Diagram1">
         <EntityTypeShape EntityType="myTaiwanModel.County" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="myTaiwanModel.Friend" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="myTaiwanModel.Image" Width="1.5" PointX="2.75" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="myTaiwanModel.Picture" Width="1.5" PointX="4.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="myTaiwanModel.Image" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="myTaiwanModel.Picture" Width="1.5" PointX="2.75" PointY="6.5" IsExpanded="true" />
         <EntityTypeShape EntityType="myTaiwanModel.Sign" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
         <EntityTypeShape EntityType="myTaiwanModel.Text" Width="1.5" PointX="6" PointY="3.125" IsExpanded="true" />
         <AssociationConnector Association="myTaiwanModel.FK__Texts__location__08B54D69" ManuallyRouted="false" />

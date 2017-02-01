@@ -43,6 +43,19 @@ namespace myTaiwanTest.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_BrowseText_Result>("sp_BrowseText", friendIDParameter);
         }
     
+        public virtual ObjectResult<sp_BrowseTextbyCounty_Result> sp_BrowseTextbyCounty(Nullable<int> friendID, Nullable<int> location)
+        {
+            var friendIDParameter = friendID.HasValue ?
+                new ObjectParameter("friendID", friendID) :
+                new ObjectParameter("friendID", typeof(int));
+    
+            var locationParameter = location.HasValue ?
+                new ObjectParameter("location", location) :
+                new ObjectParameter("location", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_BrowseTextbyCounty_Result>("sp_BrowseTextbyCounty", friendIDParameter, locationParameter);
+        }
+    
         public virtual int sp_setCoverUrl(string coverUrl, Nullable<int> userID)
         {
             var coverUrlParameter = coverUrl != null ?
@@ -69,17 +82,13 @@ namespace myTaiwanTest.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_setFaceUrl", faceUrlParameter, userIDParameter);
         }
     
-        public virtual ObjectResult<sp_BrowseTextbyCounty_Result> sp_BrowseTextbyCounty(Nullable<int> friendID, Nullable<int> location)
+        public virtual ObjectResult<sp_BrowseSingleText_Result> sp_BrowseSingleText(Nullable<int> txtID)
         {
-            var friendIDParameter = friendID.HasValue ?
-                new ObjectParameter("friendID", friendID) :
-                new ObjectParameter("friendID", typeof(int));
+            var txtIDParameter = txtID.HasValue ?
+                new ObjectParameter("txtID", txtID) :
+                new ObjectParameter("txtID", typeof(int));
     
-            var locationParameter = location.HasValue ?
-                new ObjectParameter("location", location) :
-                new ObjectParameter("location", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_BrowseTextbyCounty_Result>("sp_BrowseTextbyCounty", friendIDParameter, locationParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_BrowseSingleText_Result>("sp_BrowseSingleText", txtIDParameter);
         }
     }
 }
